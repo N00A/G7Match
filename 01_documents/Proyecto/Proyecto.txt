@@ -1,0 +1,21 @@
+											Sistema de reservas deportivas
+
+Registro/login:
+
+* Registro de usuarios	--------------------------------------->CRUD de Usuarios (crear usuario, modificar usuario[antes de modificar usuario se visualizan todos los usuarios existentes], eliminar usuario), todo esto son funcionalidades 									de Administrador.
+
+* Login de usuarios.
+
+
+
+Lista de canchas con horarios:
+
+* Listado de canchas disponibles------------------------------->CRUD de canchas (insertar cancha, modificar cancha[antes de modificar cancha se visualizan todos las canchas existentes], eliminar cancha), todo esto son funcionalidades de 									Administrador.
+
+* Deportes disponibles----------------------------------------->Se considera que el Deporte esta incluido adentro de la cancha, es decir, es un atributo de la cancha.
+
+* Realizar reservas-------------------------------------------->CRUD de reservas (crear reserva, modificar reserva[antes de modificar reserva el usuario visualiza las reservas existentes que tengan su id], eliminar reserva), todo esto 									son funcionalidades de Usuario.
+
+* Cancelar reservas-------------------------------------------->Funcionalidad ya incluida en el CRUD de reservas, esta funcionalidad es eliminar reserva.
+
+* Reservas del usuario (Reservas propias)---------------------->CRUD de reservas propias del usuario (ver las reservas del usuario, modificar algun dato del usuario en la reserva, eliminar informacion del usuario al terminar la reserva), 								todo esto son funcionalidades de Usuario.

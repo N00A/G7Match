@@ -1,0 +1,30 @@
+1 - los casos de uso apuntan a una sola funcionalidad, debe de ser descrita extensamente, no usar el verbo gestionar
+
+2 - entre mayor detalle, mejor
+
+3 - Atributos de calidad (requerimientos no funcionales):
+
+* observables: si las veo en el codigo
+* no observables: si no las veo en el codigo pero si en un comportamiento
+
+4 - para la utilizacion de recursos que quede de manera optima se debe usar la inyeccion de dependencias
+
+5 - Swagger sirve para documentar la API expuesta, de manera que se puede ver que metodos existen, que debo enviar y que me van a devolver
+
+6 - JPA es un API generico que permite heredar lo que hay en la interfaz IRespository utilizando lo que hay en Service, de modo de que asi no necesito crear los CRUD manualmente por cada uno de los modelos que tengo
+
+7 - Lombok es para generar automaticamente en tiempo de ejecucion los metodos set y get de cada uno de los modelos del sistema, Lombok tambien permite hacer constructores e instancias de clases
+
+8 - Flyway Migration es para gestionar todos los scripts que van evolucionando de la base de datos dentro del proyecto a travez de un versionador de scripts dentro del proyecto
+
+9 - No usar puertos por defecto
+
+10 - todas las aplicaciones llevan login
+
+11 - Las pruebas unitarias se hacen desde el service para que compruebe el service y el repository
+
+12 - Las pruebas de integracion se le hacen al RestController y se hacen desde herramientas externas, por ejemplo: Postman
+
+13 - El openapi es el Swagger:
+
+implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'

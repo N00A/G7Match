@@ -1,0 +1,18 @@
+1 - definir las desiciones, definir que hay que hacer
+2 - definir atributos de calidad segun la norma iso 25010
+3 - definir patrones de diseño, para ello tener en cuenta los atributos de calidad observables
+4 - usar como lenguaje de programacion Java, para el backend se recomienda usar API REST con el patron de diseño MVC, el framework Springboot es bueno para esto
+5 - spring initializr
+
+
+
+
+
+
+
+Tarea!!!!!!:
+
+1 - levantar historias de usuario (opcional)
+2 - arquitectura del proyecto (el diagrama azul), identificar atributos de calidad, identificar patrones de diseño, cumplir con lo mismo que el profesor mostro en el diagrama de ejemplo
+3 - arquetipo, linea base de desarrollo
+
