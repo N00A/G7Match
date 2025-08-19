@@ -14,6 +14,9 @@ public class UserController {
 
     private UserService userService;
 
+    @Autowired
+    public UserController(UserService userService){ this.userService = userService; }
+
     @GetMapping
     public UserModel getById(Long id){
         return userService.findById(id);
