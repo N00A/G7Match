@@ -12,13 +12,20 @@ GO
 
 -- Usuarios
 CREATE TABLE [User] (
-    UserId INT IDENTITY(1, 1) PRIMARY KEY,
+    UserId BIGINT IDENTITY(1, 1) PRIMARY KEY,
     Identification VARCHAR(20) NOT NULL UNIQUE,
-    Email VARCHAR(120) NOT NULL UNIQUE,
     PasswordHash VARBINARY(256) NOT NULL,
+    Email VARCHAR(120) NOT NULL UNIQUE,
     FirstName VARCHAR(50) NOT NULL,
+    SecondName VARCHAR(50) NULL,
     LastName VARCHAR(50) NOT NULL,
-    IsActive BIT NOT NULL DEFAULT 1
+    SecondLastName VARCHAR(50) NULL,
+    Phone VARCHAR(20) NULL,
+    IsActive BIT NOT NULL DEFAULT 1,
+    CreatedAt DATETIME2 DEFAULT GETDATE(),
+    UpdatedAt DATETIME2 NULL,
+    CreatedBy BIGINT NULL,
+    UpdatedBy BIGINT NULL
 );
 
 -- Relación Usuario - Rol
