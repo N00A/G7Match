@@ -28,6 +28,7 @@ public class UserModel {
     private String secondName;
     private String lastName;
     private String secondLastName;
+    private String phone;
     private Date createdAt;
     private Date updatedAt;
     private Long createdBy;
