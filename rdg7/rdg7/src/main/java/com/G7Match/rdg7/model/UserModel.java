@@ -14,7 +14,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="user")
+@Table(name="users")
 public class UserModel {
 
     @Id
