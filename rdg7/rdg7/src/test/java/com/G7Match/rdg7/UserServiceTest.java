@@ -82,7 +82,6 @@ class UserServiceTest {
         assertThat(result.getId()).isEqualTo(1L);
         assertThat(result.getEmail()).isEqualTo("test@mail.com");
 
-        // Capturamos el argumento para validar que se setearon los campos
         ArgumentCaptor<UserModel> captor = ArgumentCaptor.forClass(UserModel.class);
         verify(userRepository).save(captor.capture());
 

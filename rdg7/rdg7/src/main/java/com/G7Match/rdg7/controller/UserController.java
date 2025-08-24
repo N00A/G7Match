@@ -54,8 +54,6 @@ public class UserController {
     @PostMapping("/create")
     public ResponseEntity<ApiResponse<Object>> createUser(@RequestBody UsersDTO usersDTO) {
         try {
-            System.out.println("Aqui va la pryueba");
-
             UserModel savedUser = userService.save(usersDTO);
             return ResponseEntity.ok(
                     new ApiResponse<>(true, "Usuario creado exitosamente", savedUser)

@@ -1,5 +1,6 @@
 plugins {
 	id 'java'
+    id "jacoco"
 	id 'org.springframework.boot' version '3.5.4'
 	id 'io.spring.dependency-management' version '1.1.7'
 	id("io.swagger.core.v3.swagger-gradle-plugin") version "2.2.36"
@@ -30,6 +31,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.flywaydb:flyway-core'
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
+    implementation 'org.projectlombok:lombok'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -42,4 +44,31 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
+    finalizedBy tasks.named('jacocoTestReport')
+}
+
+def jacocoExcludes = [
+        'com/G7Match/rdg7/model/**',
+        'com/G7Match/rdg7/Dto/**'
+]
+
+tasks.named('jacocoTestReport', JacocoReport) {
+    dependsOn tasks.test
+    reports {
+        xml.required.set(true)
+        html.required.set(true)
+        html.outputLocation.set(layout.buildDirectory.dir('reports/jacoco/test/html'))
+    }
+
+    classDirectories.setFrom(files(classDirectories.files.collect {
+        fileTree(dir: it, exclude: jacocoExcludes)
+    }))
+}
+
+jacoco {
+    toolVersion = "0.8.11"
+}
+
+plugins.withType(JacocoPlugin).configureEach {
+    test.finalizedBy 'jacocoTestReport'
 }
