@@ -14,7 +14,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="user")
+@Table(name="users")
 public class UserModel {
 
     @Id
@@ -29,10 +29,6 @@ public class UserModel {
     private String lastName;
     private String secondLastName;
     private String phone;
-    private Date createdAt;
-    private Date updatedAt;
-    private Long createdBy;
-    private Long updatedBy;
     private Boolean isActive;
 
 
