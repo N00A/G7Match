@@ -40,7 +40,7 @@ public class UserController {
     @GetMapping("/all")
     public ResponseEntity<ApiResponse<Object>> getAllUsers() {
         try {
-            List<UserModel> userModelList = userService.getAllClubs();
+            List<UserModel> userModelList = userService.getAllUsers();
             return ResponseEntity.ok(
                     new ApiResponse<>(true, "Lista de usuarios consultada exitosamente", userModelList)
             );

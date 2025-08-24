@@ -22,7 +22,7 @@ public class UserService {
         return userRepository.findById(id).orElseThrow();
     }
 
-    public List<UserModel> getAllClubs() {
+    public List<UserModel> getAllUsers() {
         return userRepository.findAll();
     }
 

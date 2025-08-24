@@ -53,7 +53,7 @@ class UserServiceTest {
         List<UserModel> users = Arrays.asList(new UserModel(), new UserModel());
         when(userRepository.findAll()).thenReturn(users);
 
-        List<UserModel> result = userService.getAllClubs();
+        List<UserModel> result = userService.getAllUsers();
 
         assertThat(result).hasSize(2);
         verify(userRepository, times(1)).findAll();
