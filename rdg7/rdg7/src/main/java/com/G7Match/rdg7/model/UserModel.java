@@ -14,7 +14,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="users")
+@Table(name="user")
 public class UserModel {
 
     @Id
@@ -22,7 +22,7 @@ public class UserModel {
     @Column(name = "id")
     private long id;
     private String identification;
-    private String password;
+    private String passwordHash;
     private String email;
     private String firstName;
     private String secondName;
