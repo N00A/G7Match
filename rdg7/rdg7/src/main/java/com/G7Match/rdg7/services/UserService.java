@@ -38,6 +38,7 @@ public class UserService {
         user.setLastName(dto.getLastName());
         user.setSecondLastName(dto.getSecondLastName());
         user.setPhone(dto.getPhone());
+        user.setIsActive(Boolean.TRUE);
 
         return userRepository.save(user);
     }

@@ -33,6 +33,7 @@ public class UserModel {
     private Date updatedAt;
     private Long createdBy;
     private Long updatedBy;
+    private Boolean isActive;
 
 
 
