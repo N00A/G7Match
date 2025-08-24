@@ -22,7 +22,7 @@ public class UserModel {
     @Column(name = "id")
     private long id;
     private String identification;
-    private String password;
+    private String passwordHash;
     private String email;
     private String firstName;
     private String secondName;
