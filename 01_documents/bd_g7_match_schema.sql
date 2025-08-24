@@ -11,21 +11,16 @@ GO
     );
 
 -- Usuarios
-CREATE TABLE [User] (
-    UserId BIGINT IDENTITY(1, 1) PRIMARY KEY,
-    Identification VARCHAR(20) NOT NULL UNIQUE,
-    PasswordHash VARBINARY(256) NOT NULL,
-    Email VARCHAR(120) NOT NULL UNIQUE,
-    FirstName VARCHAR(50) NOT NULL,
-    SecondName VARCHAR(50) NULL,
-    LastName VARCHAR(50) NOT NULL,
-    SecondLastName VARCHAR(50) NULL,
-    Phone VARCHAR(20) NULL,
-    IsActive BIT NOT NULL DEFAULT 1,
-    CreatedAt DATETIME2 DEFAULT GETDATE(),
-    UpdatedAt DATETIME2 NULL,
-    CreatedBy BIGINT NULL,
-    UpdatedBy BIGINT NULL
+CREATE TABLE [users] (
+    id BIGINT IDENTITY(1,1) PRIMARY KEY,
+    identification NVARCHAR(50) NOT NULL,
+    password_hash NVARCHAR(255) NOT NULL,
+    email NVARCHAR(150) NOT NULL,
+    first_name NVARCHAR(100) NULL,
+    second_name NVARCHAR(100) NULL,
+    last_name NVARCHAR(100) NULL,
+    second_last_name NVARCHAR(100) NULL,
+    phone NVARCHAR(20) NULL,
 );
 
 -- Relación Usuario - Rol
