@@ -21,9 +21,6 @@ public class UserController {
 
     private final UserService userService;
 
-    @Autowired
-    public UserController(UserService userService){ this.userService = userService; }
-
     @GetMapping
     public ResponseEntity<ApiResponse<Object>> getById(Long id){
 
@@ -56,8 +53,10 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<ApiResponse<Object>> createUser(UsersDTO usersDTO) {
+    public ResponseEntity<ApiResponse<Object>> createUser(@RequestBody UsersDTO usersDTO) {
         try {
+            System.out.println("Aqui va la pryueba");
+
             UserModel savedUser = userService.save(usersDTO);
             return ResponseEntity.ok(
                     new ApiResponse<>(true, "Usuario creado exitosamente", savedUser)
