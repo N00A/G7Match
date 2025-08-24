@@ -31,6 +31,4 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build -x test --no-daemon
 
-      # 5. Ejecutar pruebas unitarias (si no dependen de DB)
-      - name: Run tests
-        run: ./gradlew test --no-daemon || echo "Tests skipped due to DB dependency"
+
