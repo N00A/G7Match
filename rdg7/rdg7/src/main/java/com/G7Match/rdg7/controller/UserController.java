@@ -6,7 +6,6 @@ import com.G7Match.rdg7.Dto.UsersDTO;
 import com.G7Match.rdg7.model.UserModel;
 import com.G7Match.rdg7.services.UserService;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,9 +19,6 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
-
-    @Autowired
-    public UserController(UserService userService){ this.userService = userService; }
 
     @GetMapping
     public ResponseEntity<ApiResponse<Object>> getById(Long id){
