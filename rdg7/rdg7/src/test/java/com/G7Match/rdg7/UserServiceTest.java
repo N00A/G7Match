@@ -53,7 +53,7 @@ class UserServiceTest {
         List<UserModel> users = Arrays.asList(new UserModel(), new UserModel());
         when(userRepository.findAll()).thenReturn(users);
 
-        List<UserModel> result = userService.getAllClubs();
+        List<UserModel> result = userService.getAllUsers();
 
         assertThat(result).hasSize(2);
         verify(userRepository, times(1)).findAll();
@@ -82,7 +82,6 @@ class UserServiceTest {
         assertThat(result.getId()).isEqualTo(1L);
         assertThat(result.getEmail()).isEqualTo("test@mail.com");
 
-        // Capturamos el argumento para validar que se setearon los campos
         ArgumentCaptor<UserModel> captor = ArgumentCaptor.forClass(UserModel.class);
         verify(userRepository).save(captor.capture());
 

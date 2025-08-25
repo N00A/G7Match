@@ -28,3 +28,19 @@
 13 - El openapi es el Swagger:
 
 implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
+
+14 - Las pruebas que se le hacen al controller son pruebas de integracion
+
+15 - server.servlet.context-path=/api/demo en application.properties sirve para darle mas control al API si tengo varias que coexisten
+
+16 - jacocoTestReport permite medir que tanta cobertura tienen las pruebas unitarias, los reportes son utiles para saber que tanto me falta cubrir en las pruebas unitarias y garantizar mejor calidad
+
+17 - sonarcloud es el analizador estatico de codigo, para que funcione bien el repositorio de codigo debe de ser publico
+
+18 - JUnit es el framework de pruebas (anotaciones, ciclo de vida, asserts), mientras que Mockito sirve para aislar dependiencias (simular una clase, como el repository)
+
+19 - Las pruebas unitarias comprueban dos cosas: la primera es comprobar que funciona (correctitud, que haga lo que debe hacer) y la otra prueba es que se debe de validar que el manejo de errores este dado
+
+20 - Para la contraseña del login del usuario se debe usar SHA-256 en un solo sentido, el profesor sugiere explorar spring security
+
+21 - Todos los componentes necesitan el JWT Token (Bearer token) menos el login y la creacion de usuario
