@@ -40,7 +40,7 @@ public class UserController {
     @GetMapping("/all")
     public ResponseEntity<ApiResponse<Object>> getAllUsers() {
         try {
-            List<UserModel> userModelList = userService.getAllClubs();
+            List<UserModel> userModelList = userService.getAllUsers();
             return ResponseEntity.ok(
                     new ApiResponse<>(true, "Lista de usuarios consultada exitosamente", userModelList)
             );
@@ -54,8 +54,6 @@ public class UserController {
     @PostMapping("/create")
     public ResponseEntity<ApiResponse<Object>> createUser(@RequestBody UsersDTO usersDTO) {
         try {
-            System.out.println("Aqui va la pryueba");
-
             UserModel savedUser = userService.save(usersDTO);
             return ResponseEntity.ok(
                     new ApiResponse<>(true, "Usuario creado exitosamente", savedUser)
