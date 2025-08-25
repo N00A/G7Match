@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: rdg7   # 👈 todo lo que esté en "run:" se ejecuta dentro de rdg7
+        working-directory: rdg7/rdg7   # 👈 todo lo que esté en "run:" se ejecuta dentro de rdg7
     steps:
       - uses: actions/checkout@v4
         with:
