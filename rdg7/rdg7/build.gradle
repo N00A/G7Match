@@ -47,10 +47,6 @@ tasks.named('test') {
 	useJUnitPlatform()
     finalizedBy tasks.named('jacocoTestReport')
 }
-def jacocoExcludes = [
-        'com/G7Match/rdg7/model/**',
-        'com/G7Match/rdg7/Dto/**'
-]
 
 tasks.named('jacocoTestReport', JacocoReport) {
     dependsOn tasks.test
@@ -61,7 +57,7 @@ tasks.named('jacocoTestReport', JacocoReport) {
     }
 
     classDirectories.setFrom(files(classDirectories.files.collect {
-        fileTree(dir: it, exclude: jacocoExcludes)
+        fileTree(dir: it, include: ['com/G7Match/rdg7/services/**'])
     }))
 }
 
