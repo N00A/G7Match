@@ -44,3 +44,21 @@ implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
 20 - Para la contraseña del login del usuario se debe usar SHA-256 en un solo sentido, el profesor sugiere explorar spring security
 
 21 - Todos los componentes necesitan el JWT Token (Bearer token) menos el login y la creacion de usuario
+
+22 - Lo ideal es que el codigo en Java debe de estar en Ingles y con anotacion CamelCase, por lo general no se usan numeros en el nombrado de paquetes
+
+23 - No usar cedulas o numeros para nombrar las ramas de git
+
+24 - Ejemplo de rama: Mpastrana, Csanchez
+
+25 - De la rama de Main se desprende la rama de integracion (Develop), la rama de integracion esta bloqueada para subir cambios directamente, la rama main tambien esta bloqueada para subir cambios directamente, solo se puede subir cambios por medio de pull request, de la rama Develop se desprende una rama para cada uno de los miembros del equipo, cada miembro del equipo trabaja sobre su propia rama, cada desarrollador en su rama si puede hacer push y pull sin restriccion
+
+26 - El desarrollador al terminar su desarrollo debe de hacer tambien sus pruebas unitarias y probar tambien con postman
+
+27 - Al hacer pull request otro miembro del equipo debe de revisar y aprobar la solicitud o rechazarla si tiene errores
+
+28 - La rama de integracion (Develop) es la que va a tener la integracion continua con git actions, el git actions tiene un conjunto de instrucciones que son: hacer el build, ejecutar el test, ejecutar sonar, esto es el script de integracion continua, el script lo que hace es que cuando ya aprobaron el pull request a Develop intenta hacer el build, para poder hacer el build tiene que ejecutar las pruebas unitarias, si pasaron entonces se crea la unidad desplegable, si se pudo crear la unidad desplegable entonces se ejecuta el sonar tomando el codigo que esta en Develop y revisa estaticamente el codigo y genera el reporte en la nube
+
+29 - El git actions no funciona con una base de datos local
+
+30 - Lo recomendable es crear la base de datos online en AWS con estancia Ec2 con una maquina t3 amilinux que es capa gratuita y adentro instalar docker, hacer docker pull de la base de datos que se necesita, se conecta a la base de datos, le crean la base de datos y cambiar la cadena de conexion en el proyecto, no utilizar dynamo db ni rds porque esas cobran despues de un periodo de tiempo
