@@ -44,3 +44,5 @@ implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
 20 - Para la contraseña del login del usuario se debe usar SHA-256 en un solo sentido, el profesor sugiere explorar spring security
 
 21 - Todos los componentes necesitan el JWT Token (Bearer token) menos el login y la creacion de usuario
+
+22 - El git actions no funcionara bien si la base de datos es local
