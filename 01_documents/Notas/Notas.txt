@@ -45,4 +45,31 @@ implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
 
 21 - Todos los componentes necesitan el JWT Token (Bearer token) menos el login y la creacion de usuario
 
-22 - El git actions no funcionara bien si la base de datos es local
+22 - Lo ideal es que el codigo en Java debe de estar en Ingles y con anotacion CamelCase, por lo general no se usan numeros en el nombrado de paquetes
+
+23 - No usar cedulas o numeros para nombrar las ramas de git
+
+24 - Ejemplo de rama: Mpastrana, Csanchez
+
+25 - De la rama de Main se desprende la rama de integracion (Develop), la rama de integracion esta bloqueada para subir cambios directamente, la rama main tambien esta bloqueada para subir cambios directamente, solo se puede subir cambios por medio de pull request, de la rama Develop se desprende una rama para cada uno de los miembros del equipo, cada miembro del equipo trabaja sobre su propia rama, cada desarrollador en su rama si puede hacer push y pull sin restriccion
+
+26 - El desarrollador al terminar su desarrollo debe de hacer tambien sus pruebas unitarias y probar tambien con postman
+
+27 - Al hacer pull request otro miembro del equipo debe de revisar y aprobar la solicitud o rechazarla si tiene errores
+
+28 - La rama de integracion (Develop) es la que va a tener la integracion continua con git actions, el git actions tiene un conjunto de instrucciones que son: hacer el build, ejecutar el test, ejecutar sonar, esto es el script de integracion continua, el script lo que hace es que cuando ya aprobaron el pull request a Develop intenta hacer el build, para poder hacer el build tiene que ejecutar las pruebas unitarias, si pasaron entonces se crea la unidad desplegable, si se pudo crear la unidad desplegable entonces se ejecuta el sonar tomando el codigo que esta en Develop y revisa estaticamente el codigo y genera el reporte en la nube
+
+29 - El git actions no funciona con una base de datos local
+
+30 - Lo recomendable es crear la base de datos online en AWS con estancia Ec2 con una maquina t3 amilinux que es capa gratuita y adentro instalar docker, hacer docker pull de la base de datos que se necesita, se conecta a la base de datos, le crean la base de datos y cambiar la cadena de conexion en el proyecto, no utilizar dynamo db ni rds porque esas cobran despues de un periodo de tiempo
+
+31 - http://localhost:9090/api/rdg7/swagger-ui/index.html = Web Swagger
+
+32 - overall code = código general
+
+33 - Integración continua (CI): es el proceso de que cada vez que alguien sube cambios al código (push), el sistema automáticamente construye el proyecto, ejecuta pruebas y valida quetodo siga funcionando bien. Ejemplo: usar GitHub Actions o Jenkins para compilar y correr tests al hacer un commit.
+
+
+34 - Despliegue continuo (CD): es llevar automáticamente el código validado a un entorno de ejecución (por ejemplo, staging o producción). Así, cuando la aplicación pasa las pruebas, se publica sin intervención manual. Ejemplo: que Spring Boot se despliegue solo en un servidor como Heroku, AWS o Docker.
+
+35 - Análisis estático del código: es revisar el código sin ejecutarlo, usando herramientas que detectan errores, malas prácticas, vulnerabilidades o problemas de estilo. Ejemplo: usar SonarQube o Checkstyle para evaluar calidad y seguridad en el código fuente de Java.
