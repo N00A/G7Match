@@ -62,3 +62,5 @@ implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
 29 - El git actions no funciona con una base de datos local
 
 30 - Lo recomendable es crear la base de datos online en AWS con estancia Ec2 con una maquina t3 amilinux que es capa gratuita y adentro instalar docker, hacer docker pull de la base de datos que se necesita, se conecta a la base de datos, le crean la base de datos y cambiar la cadena de conexion en el proyecto, no utilizar dynamo db ni rds porque esas cobran despues de un periodo de tiempo
+
+31 - http://localhost:9090/api/rdg7/swagger-ui/index.html = Web Swagger
