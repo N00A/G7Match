@@ -1,0 +1,12 @@
+command -v docker && docker --version || echo "Docker NO está instalado" = Para saber si hay docker instalado adentro de la instancia
+
+sudo systemctl is-active docker = Para saber si docker esta corriendo y hay contenedores
+
+docker ps -a = Para listar los contenedores disponibles
+
+docker start sqlserver = Para levantar el docker donde esta SQL Server
+
+Test-NetConnection -ComputerName 54.147.32.175 -Port 1433 = Para testear desde Windows (Powershell) si se puede realizar conexion a la base de datos
+
+/opt/mssql-tools/bin/sqlcmd -S 127.0.0.1,1433 -U SA -P 'Grupito7!' \
+  -Q "SELECT name FROM sys.databases ORDER BY name;" = Para listar las bases de datos de SQL Server
