@@ -66,3 +66,10 @@ implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
 31 - http://localhost:9090/api/rdg7/swagger-ui/index.html = Web Swagger
 
 32 - overall code = código general
+
+33 - Integración continua (CI): es el proceso de que cada vez que alguien sube cambios al código (push), el sistema automáticamente construye el proyecto, ejecuta pruebas y valida quetodo siga funcionando bien. Ejemplo: usar GitHub Actions o Jenkins para compilar y correr tests al hacer un commit.
+
+
+34 - Despliegue continuo (CD): es llevar automáticamente el código validado a un entorno de ejecución (por ejemplo, staging o producción). Así, cuando la aplicación pasa las pruebas, se publica sin intervención manual. Ejemplo: que Spring Boot se despliegue solo en un servidor como Heroku, AWS o Docker.
+
+35 - Análisis estático del código: es revisar el código sin ejecutarlo, usando herramientas que detectan errores, malas prácticas, vulnerabilidades o problemas de estilo. Ejemplo: usar SonarQube o Checkstyle para evaluar calidad y seguridad en el código fuente de Java.
