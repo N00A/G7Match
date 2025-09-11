@@ -29,7 +29,7 @@ FROM eclipse-temurin:17-jdk
 WORKDIR /app
 
 # Copia el archivo .jar generado desde la etapa anterior
-COPY --from=build /app/build/libs/*.jar app.jar
+COPY --from=build /app/build/libs/rdg7-0.0.1-SNAPSHOT.jar app.jar
 
 # Define la URL de conexión por defecto a SQL Server
 ENV DB_URL="jdbc:sqlserver://localhost:1433;databaseName=mi_base"
