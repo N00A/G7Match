@@ -11,14 +11,11 @@ COPY build.gradle settings.gradle ./
 # Copia el directorio del wrapper de Gradle
 COPY gradle ./gradle
 
-# Ejecuta el build de Gradle (descarga dependencias y compila con pruebas)
-# --no-daemon evita usar procesos en segundo plano
-RUN gradle build --no-daemon
-
 # Copia el código fuente al contenedor
 COPY src ./src
 
-# Limpia y vuelve a compilar toda la app (con pruebas incluidas)
+# Ejecuta el build de Gradle (descarga dependencias y compila con pruebas)
+# --no-daemon evita usar procesos en segundo plano
 RUN gradle clean build --no-daemon
 
 # Etapa 2: Imagen final que se usará para ejecutar la app compilada
