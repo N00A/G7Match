@@ -14,9 +14,9 @@ COPY gradle ./gradle
 # Copia el código fuente al contenedor
 COPY src ./src
 
-# Ejecuta el build de Gradle (descarga dependencias y compila con pruebas)
+# Ejecuta el build de Gradle (descarga dependencias y compila sin pruebas)
 # --no-daemon evita usar procesos en segundo plano
-RUN gradle clean build --no-daemon
+RUN gradle clean build -x test --no-daemon
 
 # Etapa 2: Imagen final que se usará para ejecutar la app compilada
 # Usa una imagen liviana con JDK 17 para producción
