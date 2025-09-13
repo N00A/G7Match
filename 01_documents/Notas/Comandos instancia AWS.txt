@@ -6,7 +6,14 @@ docker ps -a = Para listar los contenedores disponibles
 
 docker start sqlserver = Para levantar el docker donde esta SQL Server
 
-Test-NetConnection -ComputerName 54.147.32.175 -Port 1433 = Para testear desde Windows (Powershell) si se puede realizar conexion a la base de datos
+En la instancia de AWS, con el comando sudo su me vuelvo un super usuario, sere el usuario root
 
-/opt/mssql-tools/bin/sqlcmd -S 127.0.0.1,1433 -U SA -P 'Grupito7!' \
-  -Q "SELECT name FROM sys.databases ORDER BY name;" = Para listar las bases de datos de SQL Server
+Con el comando yum update -y se realiza una actualizacion del sistema operativo de la instancia
+
+Con el comando apt-get install -y docker.io se realiza la instalacion de docker adentro de la instancia, la otra opcion es usar yum install -y docker
+
+Con el comando systemctl start docker se inicializa el servicio de docker
+
+Con el comando de systemctl enable docker se levanta el servicio de docker, para cada vez que arranque la maquina se levante el docker
+
+Con el comando docker pull se puede traer una imagen para que quede funcionando adentro del contenedor
