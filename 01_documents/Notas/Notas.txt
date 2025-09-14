@@ -133,3 +133,5 @@ implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
 62 - docker logs -f rdg7-app es el comando para ver los logs de la imagen que se esta ejecutando en la instancia de AWS
 
 63 - docker logout es el comando para cerrar sesion en una cuenta de docker hub
+
+pp
