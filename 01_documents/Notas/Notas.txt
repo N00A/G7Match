@@ -122,4 +122,16 @@ implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
 57 - Enlace necesario para eliminar un usuario (Metodo DELETE):
      http://localhost:9090/api/rdg7/user/delete/1
 
-nota23356o
+58 - docker login es el comando para iniciar sesion en una cuenta de docker hub, se necesitara un Docker Hub username y un Docker Hub password/token
+
+59 - docker tag rdg7:latest <TU_USUARIO_DOCKERHUB>/rdg7-app:latest es el comando para etiquetar la imagen creada localmente con el nombre de usuario de docker hub y el nombre que le quiero dar a la imagen en docker hub
+
+60 - docker push <TU_USUARIO_DOCKERHUB>/rdg7-app:latest es el comando para subir la imagen etiquetada a docker hub
+
+61 - docker pull <TU_USUARIO_DOCKERHUB>/rdg7-app:latest es el comando para descargar la imagen de docker hub a la instancia de AWS
+
+62 - docker logs -f rdg7-app es el comando para ver los logs de la imagen que se esta ejecutando en la instancia de AWS
+
+63 - docker logout es el comando para cerrar sesion en una cuenta de docker hub
+
+pppp
