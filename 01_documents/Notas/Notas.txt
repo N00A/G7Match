@@ -122,4 +122,4 @@ implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
 57 - Enlace necesario para eliminar un usuario (Metodo DELETE):
      http://localhost:9090/api/rdg7/user/delete/1
 
-nota233
+nota2335
