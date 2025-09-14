@@ -43,6 +43,10 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Run tests and build
+        env:
+          DB_URL: ${{ secrets.DB_URL }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
         run: ./gradlew clean build --info
 
       - name: SonarQube analysis
