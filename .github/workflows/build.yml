@@ -94,8 +94,9 @@ jobs:
             docker stop rdg7-app || true
             docker rm rdg7-app || true
             docker run -d --name rdg7-app -p 9090:9090 \
-              -e DB_URL="${DB_URL}" \
-              -e DB_USER="${DB_USER}" \
-              -e DB_PASSWORD="${DB_PASSWORD}" \
-              --restart always \
-              ${{ secrets.DOCKERHUB_USERNAME }}/rdg7-app:latest
+            -e DB_URL="${{ secrets.DB_URL }}" \
+            -e DB_USER="${{ secrets.DB_USER }}" \
+            -e DB_PASSWORD="${{ secrets.DB_PASSWORD }}" \
+            --restart always \
+            ${{ secrets.DOCKERHUB_USERNAME }}/rdg7-app:latest
+
