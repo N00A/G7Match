@@ -49,7 +49,7 @@ class UserServiceTest {
     }
 
     @Test
-    void testGetAllClubs() {
+    void testGetAllUsers() {
         List<UserModel> users = Arrays.asList(new UserModel(), new UserModel());
         when(userRepository.findAll()).thenReturn(users);
 
@@ -70,6 +70,7 @@ class UserServiceTest {
         dto.setLastName("Doe");
         dto.setSecondLastName("Smith");
         dto.setPhone("555-123");
+        dto.setIsActive(true);
 
         UserModel savedUser = new UserModel();
         savedUser.setId(1L);
@@ -127,6 +128,38 @@ class UserServiceTest {
     }
 
     @Test
+    void testUpdateUser_AllFields() {
+        UserModel existingUser = new UserModel();
+        existingUser.setId(1L);
+
+        UsersDTO dto = new UsersDTO();
+        dto.setIdentification("456");
+        dto.setPassword("updatedPass");
+        dto.setEmail("updated@mail.com");
+        dto.setFirstName("Alice");
+        dto.setSecondName("B.");
+        dto.setLastName("Wonderland");
+        dto.setSecondLastName("Smith");
+        dto.setPhone("777-8888");
+        dto.setIsActive(true);
+
+        when(userRepository.findById(1L)).thenReturn(Optional.of(existingUser));
+        when(userRepository.save(any(UserModel.class))).thenAnswer(invocation -> invocation.getArgument(0));
+
+        UserModel updated = userService.updateUser(1L, dto);
+
+        assertThat(updated.getIdentification()).isEqualTo("456");
+        assertThat(updated.getPasswordHash()).isEqualTo("updatedPass");
+        assertThat(updated.getEmail()).isEqualTo("updated@mail.com");
+        assertThat(updated.getFirstName()).isEqualTo("Alice");
+        assertThat(updated.getSecondName()).isEqualTo("B.");
+        assertThat(updated.getLastName()).isEqualTo("Wonderland");
+        assertThat(updated.getSecondLastName()).isEqualTo("Smith");
+        assertThat(updated.getPhone()).isEqualTo("777-8888");
+        assertThat(updated.getIsActive()).isTrue();
+    }
+
+    @Test
     void testUpdateUser_UserNotFound() {
         UsersDTO dto = new UsersDTO();
         dto.setEmail("new@mail.com");
@@ -142,5 +175,3 @@ class UserServiceTest {
         verify(userRepository, never()).save(any(UserModel.class));
     }
 }
-
-
