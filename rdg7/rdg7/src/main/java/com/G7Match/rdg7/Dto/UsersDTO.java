@@ -14,4 +14,5 @@ public class UsersDTO {
     private String lastName;
     private String secondLastName;
     private String phone;
+    private Boolean isActive;
 }
