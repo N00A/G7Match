@@ -1,6 +1,5 @@
 package com.G7Match.rdg7.controller;
 
-
 import com.G7Match.rdg7.Dto.ApiResponse;
 import com.G7Match.rdg7.Dto.UsersDTO;
 import com.G7Match.rdg7.model.UserModel;
@@ -33,8 +32,6 @@ public class UserController {
                     new ApiResponse<>(false, "Error al consultar el usuario: " + e.getMessage(), null)
             );
         }
-
-
     }
 
     @GetMapping("/all")
@@ -94,5 +91,4 @@ public class UserController {
             );
         }
     }
-
 }

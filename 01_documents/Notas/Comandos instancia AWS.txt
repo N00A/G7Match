@@ -1,0 +1,19 @@
+command -v docker && docker --version || echo "Docker NO está instalado" = Para saber si hay docker instalado adentro de la instancia
+
+sudo systemctl is-active docker = Para saber si docker esta corriendo y hay contenedores
+
+docker ps -a = Para listar los contenedores disponibles
+
+docker start sqlserver = Para levantar el docker donde esta SQL Server
+
+En la instancia de AWS, con el comando sudo su me vuelvo un super usuario, sere el usuario root
+
+Con el comando yum update -y se realiza una actualizacion del sistema operativo de la instancia
+
+Con el comando apt-get install -y docker.io se realiza la instalacion de docker adentro de la instancia, la otra opcion es usar yum install -y docker
+
+Con el comando systemctl start docker se inicializa el servicio de docker
+
+Con el comando de systemctl enable docker se levanta el servicio de docker, para cada vez que arranque la maquina se levante el docker
+
+Con el comando docker pull se puede traer una imagen para que quede funcionando adentro del contenedor

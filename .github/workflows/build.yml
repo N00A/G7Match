@@ -1,18 +1,19 @@
-name: SonarQube
+name: CI/CD Pipeline
+
 on:
   push:
     branches:
-      - main
+      - develop
   pull_request:
     types: [opened, synchronize, reopened]
 
 jobs:
-  build:
-    name: Build and analyze
+  build-and-analyze:
+    name: Build, test and analyze
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: rdg7/rdg7 
+        working-directory: rdg7/rdg7
     steps:
       - uses: actions/checkout@v4
         with:
@@ -39,12 +40,62 @@ jobs:
           restore-keys: ${{ runner.os }}-gradle
 
       - name: Grant execute permission for gradlew
-        run: chmod +x ./gradlew 
+        run: chmod +x ./gradlew
 
-      - name: Build and analyze
+      - name: Run tests and build
+        env:
+          DB_URL: ${{ secrets.DB_URL }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        run: ./gradlew clean build --info
+
+      - name: SonarQube analysis
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           DB_URL: ${{ secrets.DB_URL }}
           DB_USER: ${{ secrets.DB_USER }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-        run: ./gradlew build sonar --info  
+        run: ./gradlew sonar --info
+
+      - name: Check SonarQube Quality Gate
+        uses: SonarSource/sonarqube-quality-gate-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          scanMetadataReportFile: rdg7/rdg7/build/sonar/report-task.txt
+
+  docker-deploy:
+    name: Build and deploy Docker
+    runs-on: ubuntu-latest
+    needs: build-and-analyze
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build Docker image
+        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/rdg7-app:latest rdg7/rdg7
+
+      - name: Push Docker image to Docker Hub
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/rdg7-app:latest
+
+      - name: Deploy to AWS via SSH
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.AWS_HOST }}
+          username: ec2-user
+          key: ${{ secrets.AWS_SSH_KEY }}
+          script: |
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/rdg7-app:latest
+            docker stop rdg7-app || true
+            docker rm rdg7-app || true
+            docker run -d --name rdg7-app -p ${{ secrets.APP_PORTS }} \
+            -e DB_URL="${{ secrets.DB_URL }}" \
+            -e DB_USER="${{ secrets.DB_USER }}" \
+            -e DB_PASSWORD="${{ secrets.DB_PASSWORD }}" \
+            --restart always \
+            ${{ secrets.DOCKERHUB_USERNAME }}/rdg7-app:latest

@@ -45,4 +45,95 @@ implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
 
 21 - Todos los componentes necesitan el JWT Token (Bearer token) menos el login y la creacion de usuario
 
-22 - El git actions no funcionara bien si la base de datos es local
+22 - Lo ideal es que el codigo en Java debe de estar en Ingles y con anotacion CamelCase, por lo general no se usan numeros en el nombrado de paquetes
+
+23 - No usar cedulas o numeros para nombrar las ramas de git
+
+24 - Ejemplo de rama: Mpastrana, Csanchez
+
+25 - De la rama de Main se desprende la rama de integracion (Develop), la rama de integracion esta bloqueada para subir cambios directamente, la rama main tambien esta bloqueada para subir cambios directamente, solo se puede subir cambios por medio de pull request, de la rama Develop se desprende una rama para cada uno de los miembros del equipo, cada miembro del equipo trabaja sobre su propia rama, cada desarrollador en su rama si puede hacer push y pull sin restriccion
+
+26 - El desarrollador al terminar su desarrollo debe de hacer tambien sus pruebas unitarias y probar tambien con postman
+
+27 - Al hacer pull request otro miembro del equipo debe de revisar y aprobar la solicitud o rechazarla si tiene errores
+
+28 - La rama de integracion (Develop) es la que va a tener la integracion continua con git actions, el git actions tiene un conjunto de instrucciones que son: hacer el build, ejecutar el test, ejecutar sonar, esto es el script de integracion continua, el script lo que hace es que cuando ya aprobaron el pull request a Develop intenta hacer el build, para poder hacer el build tiene que ejecutar las pruebas unitarias, si pasaron entonces se crea la unidad desplegable, si se pudo crear la unidad desplegable entonces se ejecuta el sonar tomando el codigo que esta en Develop y revisa estaticamente el codigo y genera el reporte en la nube
+
+29 - El git actions no funciona con una base de datos local
+
+30 - Lo recomendable es crear la base de datos online en AWS con estancia Ec2 con una maquina t3 amilinux que es capa gratuita y adentro instalar docker, hacer docker pull de la base de datos que se necesita, se conecta a la base de datos, le crean la base de datos y cambiar la cadena de conexion en el proyecto, no utilizar dynamo db ni rds porque esas cobran despues de un periodo de tiempo
+
+31 - http://localhost:9090/api/rdg7/swagger-ui/index.html = Web Swagger
+
+32 - overall code = código general
+
+33 - Integración continua (CI): es el proceso de que cada vez que alguien sube cambios al código (push), el sistema automáticamente construye el proyecto, ejecuta pruebas y valida quetodo siga funcionando bien. Ejemplo: usar GitHub Actions o Jenkins para compilar y correr tests al hacer un commit.
+
+34 - Despliegue continuo (CD): es llevar automáticamente el código validado a un entorno de ejecución (por ejemplo, staging o producción). Así, cuando la aplicación pasa las pruebas, se publica sin intervención manual. Ejemplo: que Spring Boot se despliegue solo en un servidor como Heroku, AWS o Docker.
+
+35 - Análisis estático del código: es revisar el código sin ejecutarlo, usando herramientas que detectan errores, malas prácticas, vulnerabilidades o problemas de estilo. Ejemplo: usar SonarQube o Checkstyle para evaluar calidad y seguridad en el código fuente de Java.
+
+36 - la primera practica de calidad de devops es Integración Continua (Continuous Integration - CI)
+
+37 - en docker, yo puedo traerme imagenes ya construidas con docker pull, para construir una imagen propia creo un docker file (compartir con mi maquina a traves de un envio o subirlo a un docker hub y descargarlo directamente en mi maquina con los comandos que le de en mi script)
+
+38 - el comando ./gradlew build sirve para garantizar que en el proyecto pueda ejecutar las instrucciones de construccion y ver si puede generar el empaquetado
+
+39 - el comando java -jar .\build\libs\rdg7-0.0.1-SNAPSHOT.jar permite levantar el servidor de aplicaciones (lo que hace el botoncito verde de ejecutar)
+
+40 - el archivo rdg7-0.0.1-SNAPSHOT.jar es la unidad despliegable o release
+
+41 - con los dos comandos anteriores se logra hacer un despliegue manual de la aplicacion, y asi es que se hace para ejecutar la aplicacion en un servidor porque normalmente los servidores no tienen ningun tipo de interfaz grafica
+
+42 - ENTRYPOINT ["java", "-jar", "app.jar", "--server.address=0.0.0.0"] esta linea de codigo es como si uno se parara en la linea de comandos y escribiera manual cada uno de estos comandos
+
+43 - el comando docker ps -a sirve para listar TODOS los contenedores que tenga creados (activos y no activos)
+
+44 - docker build -t rdg7:latest . Es el comando para crear la imagen de Docker a partir del archivo Dockerfile que se tiene en el proyecto y la finalidad es poder poner esta imagen en un contenedor
+
+45 - docker images sirve para listar los contenedores creados
+
+46 - Con el Dockerfile y el archivo jar ya tengo lo necesario para desplegar mi aplicacion
+
+47 - Amazon EC2 es basicamente una maquina virtual en la nube, crear una instancia es crear una maquina virtual, es un servidor fisico para desplegar aplicaciones en la nube
+
+48 - En Amazon EC2 de manera gratuita solo puedo tener una sola instancia
+
+49 - t2.micro y t3.micro son instancias gratuitas de AWS
+
+50 - Conectarse a la plataforma por consola es mas lento y es mas un metodo de rescate, lo ideal es conectarse por una herramienta SSH externa como por ejemplo putty
+
+51 - la IP Elástica de la instancia de AWS = IP pública fija y permanente que garantiza que el servidor en AWS sea accesible siempre con la misma dirección, tambien podemos usar el DNS publico
+
+52 - No se usaran IPs limitadas, se permitira el acceso desde cualquier IP 0.0.0.0/0
+
+53 - Enlace necesario para obtener todos los usuarios (Metodo GET):
+     http://localhost:9090/api/rdg7/user/all
+
+54 - Enlace necesario para obtener usuario por ID (Metodo GET):
+     http://localhost:9090/api/rdg7/user?id=1
+
+55 - Enlace necesario para crear un usuario (Metodo POST):
+     http://localhost:9090/api/rdg7/user/create
+
+56 - Enlace necesario para actualizar un usuario (Metodo PUT):
+     http://localhost:9090/api/rdg7/user/update/1
+
+57 - Enlace necesario para eliminar un usuario (Metodo DELETE):
+     http://localhost:9090/api/rdg7/user/delete/1
+
+58 - docker login es el comando para iniciar sesion en una cuenta de docker hub, se necesitara un Docker Hub username y un Docker Hub password/token
+
+59 - docker tag rdg7:latest <TU_USUARIO_DOCKERHUB>/rdg7-app:latest es el comando para etiquetar la imagen creada localmente con el nombre de usuario de docker hub y el nombre que le quiero dar a la imagen en docker hub
+
+60 - docker push <TU_USUARIO_DOCKERHUB>/rdg7-app:latest es el comando para subir la imagen etiquetada a docker hub
+
+61 - docker pull <TU_USUARIO_DOCKERHUB>/rdg7-app:latest es el comando para descargar la imagen de docker hub a la instancia de AWS
+
+62 - docker logs -f rdg7-app es el comando para ver los logs de la imagen que se esta ejecutando en la instancia de AWS
+
+63 - docker logout es el comando para cerrar sesion en una cuenta de docker hub
+
+64 - El dockerfile contiene una serie de instrucciones necesarias para poder despliegar mi aplicacion en un contenedor (podria ser un contenedor en AWS)
+
+qqqaqq
