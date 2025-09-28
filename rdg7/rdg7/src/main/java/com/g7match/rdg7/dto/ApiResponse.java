@@ -1,4 +1,4 @@
-package com.G7Match.rdg7.Dto;
+package com.g7match.rdg7.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

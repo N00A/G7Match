@@ -1,4 +1,4 @@
-package com.G7Match.rdg7;
+package com.g7match.rdg7;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

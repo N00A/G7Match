@@ -1,4 +1,4 @@
-package com.G7Match.rdg7.model;
+package com.g7match.rdg7.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

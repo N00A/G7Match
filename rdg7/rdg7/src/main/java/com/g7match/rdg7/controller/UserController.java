@@ -1,9 +1,9 @@
-package com.G7Match.rdg7.controller;
+package com.g7match.rdg7.controller;
 
-import com.G7Match.rdg7.Dto.ApiResponse;
-import com.G7Match.rdg7.Dto.UsersDTO;
-import com.G7Match.rdg7.model.UserModel;
-import com.G7Match.rdg7.services.UserService;
+import com.g7match.rdg7.dto.ApiResponse;
+import com.g7match.rdg7.dto.UsersDTO;
+import com.g7match.rdg7.model.UserModel;
+import com.g7match.rdg7.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

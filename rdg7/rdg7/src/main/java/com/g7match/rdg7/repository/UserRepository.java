@@ -1,6 +1,6 @@
-package com.G7Match.rdg7.repository;
+package com.g7match.rdg7.repository;
 
-import com.G7Match.rdg7.model.UserModel;
+import com.g7match.rdg7.model.UserModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
