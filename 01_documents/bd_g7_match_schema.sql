@@ -21,6 +21,7 @@ CREATE TABLE [users] (
     last_name NVARCHAR(100) NULL,
     second_last_name NVARCHAR(100) NULL,
     phone NVARCHAR(20) NULL,
+    is_active bit null
 );
 
 -- Relación Usuario - Rol
