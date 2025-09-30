@@ -1,14 +1,11 @@
-                                                                                                            USE bd_g7_match;
-
+USE G7MATCH;
 GO
-    /* =========================
-     Tablas base
-     ========================= */
-    -- Roles
-    CREATE TABLE Role (
-        id INT IDENTITY(1, 1) PRIMARY KEY,
-        Name VARCHAR(50) NOT NULL UNIQUE
-    );
+
+-- Roles
+CREATE TABLE Role (
+    id INT IDENTITY(1, 1) PRIMARY KEY,
+    Name VARCHAR(50) NOT NULL UNIQUE
+);
 
 -- Usuarios
 CREATE TABLE [users] (
@@ -21,16 +18,15 @@ CREATE TABLE [users] (
     last_name NVARCHAR(100) NULL,
     second_last_name NVARCHAR(100) NULL,
     phone NVARCHAR(20) NULL,
-    is_active bit null
+    is_active BIT NULL
 );
 
--- Relación Usuario - Rol
+-- Relación Usuario - Rol (muchos a muchos)
 CREATE TABLE UserRole (
-    id INT IDENTITY(1,1) PRIMARY KEY,
-    User_id INT NOT NULL,
+    User_id BIGINT NOT NULL,
     Role_id INT NOT NULL,
     CONSTRAINT PK_UserRole PRIMARY KEY (User_id, Role_id),
-    CONSTRAINT FK_UserRole_User FOREIGN KEY (User_id) REFERENCES [User](id),
+    CONSTRAINT FK_UserRole_User FOREIGN KEY (User_id) REFERENCES [users](id),
     CONSTRAINT FK_UserRole_Role FOREIGN KEY (Role_id) REFERENCES Role(id)
 );
 
@@ -55,11 +51,11 @@ CREATE TABLE Court (
 CREATE TABLE Reservation (
     id INT IDENTITY(1, 1) PRIMARY KEY,
     Court_id INT NOT NULL,
-    User_id INT NOT NULL,
+    User_id BIGINT NOT NULL,
     StartAt DATETIME2(0) NOT NULL,
     EndAt DATETIME2(0) NOT NULL,
     Status_Code VARCHAR(15) NOT NULL,
     Notes VARCHAR(250) NULL,
     CONSTRAINT FK_Reservation_Court FOREIGN KEY (Court_id) REFERENCES Court(id),
-    CONSTRAINT FK_Reservation_User FOREIGN KEY (User_id) REFERENCES [User](id)
+    CONSTRAINT FK_Reservation_User FOREIGN KEY (User_id) REFERENCES [users](id)
 );
