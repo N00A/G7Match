@@ -35,7 +35,7 @@ VALUES
     (N'Coliseo Baloncesto',     N'Sede Sur - Medellín', 3,  60000, 1);
 
 -- Reservas
-INSERT INTO Reservation (Court_id, User_id, StartAt, EndAt, Status_Code, Notes)
+INSERT INTO Reservation (Court_id, User_id, Start_at, End_at, Status_Code, Notes)
 VALUES
     (1, 2, '2025-10-01 09:00:00', '2025-10-01 10:00:00', N'CONFIRMADO', N'Juego amistoso'),
     (2, 2, '2025-10-02 15:00:00', '2025-10-02 16:30:00', N'PENDIENTE',  N'Clase particular'),
