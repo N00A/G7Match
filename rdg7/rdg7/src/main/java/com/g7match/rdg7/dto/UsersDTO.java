@@ -1,4 +1,4 @@
-package com.G7Match.rdg7.Dto;
+package com.g7match.rdg7.dto;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -14,4 +14,5 @@ public class UsersDTO {
     private String lastName;
     private String secondLastName;
     private String phone;
+    private Boolean isActive;
 }

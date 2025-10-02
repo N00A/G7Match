@@ -1,12 +1,10 @@
-package com.G7Match.rdg7.model;
-
+package com.g7match.rdg7.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 
 @Data
 @Builder
@@ -29,7 +27,4 @@ public class UserModel {
     private String secondLastName;
     private String phone;
     private Boolean isActive;
-
-
-
 }

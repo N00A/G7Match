@@ -1,14 +1,11 @@
-USE bd_g7_match;
-
+USE G7MATCH;
 GO
-    /* =========================
-     Tablas base
-     ========================= */
-    -- Roles
-    CREATE TABLE Role (
-        RoleId INT IDENTITY(1, 1) PRIMARY KEY,
-        Name VARCHAR(50) NOT NULL UNIQUE
-    );
+
+-- Roles
+CREATE TABLE Role (
+    id INT IDENTITY(1, 1) PRIMARY KEY,
+    Name VARCHAR(50) NOT NULL UNIQUE
+);
 
 -- Usuarios
 CREATE TABLE [users] (
@@ -16,56 +13,49 @@ CREATE TABLE [users] (
     identification NVARCHAR(50) NOT NULL,
     password_hash NVARCHAR(255) NOT NULL,
     email NVARCHAR(150) NOT NULL,
-    first_name NVARCHAR(100) NULL,
+    first_name NVARCHAR(100) NOT NULL,
     second_name NVARCHAR(100) NULL,
-    last_name NVARCHAR(100) NULL,
+    last_name NVARCHAR(100) NOT NULL,
     second_last_name NVARCHAR(100) NULL,
     phone NVARCHAR(20) NULL,
+    is_active BIT NOT NULL
 );
 
--- Relación Usuario - Rol
+-- Relación Usuario - Rol (muchos a muchos)
 CREATE TABLE UserRole (
-    UserId INT NOT NULL,
-    RoleId INT NOT NULL,
-    CONSTRAINT PK_UserRole PRIMARY KEY (UserId, RoleId),
-    CONSTRAINT FK_UserRole_User FOREIGN KEY (UserId) REFERENCES [User](UserId),
-    CONSTRAINT FK_UserRole_Role FOREIGN KEY (RoleId) REFERENCES Role(RoleId)
+    id INT IDENTITY(1, 1) PRIMARY KEY,
+    User_id BIGINT NOT NULL,
+    Role_id INT NOT NULL,
+    CONSTRAINT FK_UserRole_User FOREIGN KEY (User_id) REFERENCES [users](id),
+    CONSTRAINT FK_UserRole_Role FOREIGN KEY (Role_id) REFERENCES Role(id)
 );
 
 -- Deportes
 CREATE TABLE Sport (
-    SportId INT IDENTITY(1, 1) PRIMARY KEY,
+    id INT IDENTITY(1, 1) PRIMARY KEY,
     Name VARCHAR(60) NOT NULL UNIQUE
 );
 
 -- Canchas
 CREATE TABLE Court (
-    CourtId INT IDENTITY(1, 1) PRIMARY KEY,
+    id INT IDENTITY(1, 1) PRIMARY KEY,
     Name VARCHAR(80) NOT NULL UNIQUE,
     Location VARCHAR(150) NULL,
-    SportId INT NOT NULL,
-    PricePerHour DECIMAL(10, 2) NOT NULL,
-    IsActive BIT NOT NULL DEFAULT 1,
-    CONSTRAINT FK_Court_Sport FOREIGN KEY (SportId) REFERENCES Sport(SportId)
-);
-
--- Estados de reservas
-CREATE TABLE ReservationStatus (
-    StatusCode VARCHAR(15) NOT NULL PRIMARY KEY,
-    -- Ej: ACTIVE, CANCELLED, COMPLETED
-    Description VARCHAR(80) NULL
+    Sport_id INT NOT NULL,
+    Price_Per_Hour DECIMAL(10, 2) NOT NULL,
+    Is_Active BIT NOT NULL DEFAULT 1,
+    CONSTRAINT FK_Court_Sport FOREIGN KEY (Sport_id) REFERENCES Sport(id)
 );
 
 -- Reservas
 CREATE TABLE Reservation (
-    ReservationId INT IDENTITY(1, 1) PRIMARY KEY,
-    CourtId INT NOT NULL,
-    UserId INT NOT NULL,
-    StartAt DATETIME2(0) NOT NULL,
-    EndAt DATETIME2(0) NOT NULL,
-    StatusCode VARCHAR(15) NOT NULL,
+    id INT IDENTITY(1, 1) PRIMARY KEY,
+    Court_id INT NOT NULL,
+    User_id BIGINT NOT NULL,
+    Start_at DATETIME2(0) NOT NULL,
+    End_at DATETIME2(0) NOT NULL,
+    Status_Code VARCHAR(15) NOT NULL,
     Notes VARCHAR(250) NULL,
-    CONSTRAINT FK_Reservation_Court FOREIGN KEY (CourtId) REFERENCES Court(CourtId),
-    CONSTRAINT FK_Reservation_User FOREIGN KEY (UserId) REFERENCES [User](UserId),
-    CONSTRAINT FK_Reservation_Status FOREIGN KEY (StatusCode) REFERENCES ReservationStatus(StatusCode)
+    CONSTRAINT FK_Reservation_Court FOREIGN KEY (Court_id) REFERENCES Court(id),
+    CONSTRAINT FK_Reservation_User FOREIGN KEY (User_id) REFERENCES [users](id)
 );

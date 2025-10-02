@@ -56,9 +56,16 @@ tasks.named('jacocoTestReport', JacocoReport) {
         html.outputLocation.set(layout.buildDirectory.dir('reports/jacoco/test/html'))
     }
 
-    classDirectories.setFrom(files(classDirectories.files.collect {
-        fileTree(dir: it, include: ['com/G7Match/rdg7/services/**'])
-    }))
+    classDirectories.setFrom(
+            fileTree(
+                    dir: layout.buildDirectory.dir("classes/java/main").get().asFile,
+                    include: [
+                            "com/g7match/rdg7/Rdg7Application.class",
+                            "com/g7match/rdg7/controller/UserController.class",
+                            "com/g7match/rdg7/services/UserService.class"
+                    ]
+            )
+    )
 }
 
 jacoco {

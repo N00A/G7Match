@@ -1,8 +1,8 @@
-package com.G7Match.rdg7.services;
+package com.g7match.rdg7.services;
 
-import com.G7Match.rdg7.Dto.UsersDTO;
-import com.G7Match.rdg7.model.UserModel;
-import com.G7Match.rdg7.repository.UserRepository;
+import com.g7match.rdg7.dto.UsersDTO;
+import com.g7match.rdg7.model.UserModel;
+import com.g7match.rdg7.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +18,7 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public UserModel findById(Long id){
+    public UserModel findById(Long id) {
         return userRepository.findById(id).orElseThrow();
     }
 
@@ -28,7 +28,22 @@ public class UserService {
 
     public UserModel save(UsersDTO dto) {
         UserModel user = new UserModel();
+        mapDTOToUser(dto, user);
+        return userRepository.save(user);
+    }
 
+    public void deleteById(Long id) {
+        userRepository.deleteById(id);
+    }
+
+    public UserModel updateUser(Long id, UsersDTO dto) {
+        return userRepository.findById(id).map(user -> {
+            mapDTOToUser(dto, user);
+            return userRepository.save(user);
+        }).orElseThrow(() -> new RuntimeException("User not found with id " + id));
+    }
+
+    private void mapDTOToUser(UsersDTO dto, UserModel user) {
         user.setIdentification(dto.getIdentification());
         user.setPasswordHash(dto.getPassword());
         user.setEmail(dto.getEmail());
@@ -37,20 +52,6 @@ public class UserService {
         user.setLastName(dto.getLastName());
         user.setSecondLastName(dto.getSecondLastName());
         user.setPhone(dto.getPhone());
-        user.setIsActive(Boolean.TRUE);
-
-        return userRepository.save(user);
-    }
-    public void deleteById(Long id) {
-        userRepository.deleteById(id);
-    }
-
-    public UserModel updateUser(Long id, UsersDTO usersDTO) {
-        return userRepository.findById(id).map(user -> {
-            user.setEmail(usersDTO.getEmail());
-            user.setPasswordHash(usersDTO.getPassword());
-            user.setPhone(usersDTO.getPhone());
-            return userRepository.save(user);
-        }).orElseThrow(() -> new RuntimeException("User not found with id " + id));
+        user.setIsActive(dto.getIsActive());
     }
 }
