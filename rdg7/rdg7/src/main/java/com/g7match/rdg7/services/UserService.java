@@ -18,6 +18,10 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    public UserModel findByIdModel(Long id) {
+        return userRepository.findById(id).orElseThrow();
+    }
+
     public UserModel findById(Long id) {
         return userRepository.findById(id).orElseThrow();
     }
