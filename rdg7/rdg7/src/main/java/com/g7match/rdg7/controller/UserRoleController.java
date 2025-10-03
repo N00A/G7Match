@@ -9,10 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,23 +20,26 @@ public class UserRoleController {
 
     private final UserRoleService userRoleService;
 
-    @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<UserRoleDTO>> getById(Long id){
+    @GetMapping("/get-by-id/{id}")
+    public ResponseEntity<ApiResponse<UserRoleDTO>> getById(@PathVariable("id") Long id) {
+        System.out.println("ID recibido: " + id);
         return new ResponseEntity<>(userRoleService.getById(id), HttpStatus.OK);
     }
 
-    @GetMapping("all")
+    @GetMapping("/all")
     public ResponseEntity<ApiResponse<List<UserRoleDTO>>> getAll(){
         return new ResponseEntity<>(userRoleService.getAll(), HttpStatus.OK);
     }
 
     @PostMapping("/create")
-    public ResponseEntity<ApiResponse<UserRoleDTO>> createUserRole(UserRoleDTO userRoleDTO) {
+    public ResponseEntity<ApiResponse<UserRoleDTO>> createUserRole(@RequestBody UserRoleDTO userRoleDTO) {
         return new ResponseEntity<>(userRoleService.create(userRoleDTO), HttpStatus.OK);
     }
 
-    @PostMapping("/delete")
-    public ResponseEntity<ApiResponse<UserRoleDTO>> deleteUserRole(Long id) {
-        return new ResponseEntity<>(userRoleService.delete(id), HttpStatus.OK);
+    @DeleteMapping("/delete-by-id/{id}")
+    public ResponseEntity<ApiResponse<Void>> deleteUserRole(@PathVariable Long id) {
+        userRoleService.delete(id);
+        return ResponseEntity.ok(new ApiResponse<>(true, "Registro eliminado correctamente", null));
     }
+
 }

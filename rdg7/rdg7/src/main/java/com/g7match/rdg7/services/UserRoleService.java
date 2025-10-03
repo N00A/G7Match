@@ -6,12 +6,9 @@ import com.g7match.rdg7.exception.NotFoundException;
 import com.g7match.rdg7.model.RoleModel;
 import com.g7match.rdg7.model.UserModel;
 import com.g7match.rdg7.model.UserRoleModel;
-import com.g7match.rdg7.repository.UserRepository;
 import com.g7match.rdg7.repository.UserRoleRepository;
-import org.apache.catalina.User;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,13 +31,10 @@ public class UserRoleService {
 
         UserRoleModel userRoleModel = userRoleRepository.findById(id).orElse(null);
         if (userRoleModel == null) {
-            throw new NotFoundException(String.format("No se encontró el registro con el id {}", id));
+            throw new NotFoundException(String.format("No se encontró el registro con el id %s", id));
         }
         return new ApiResponse<>(true, "Registro consultado exitosamente",
-                UserRoleDTO.builder()
-                        .userId(userRoleModel.getUserModel().getId())
-                        .roleId(Long.valueOf(userRoleModel.getRoleModel().getId()))
-                        .build());
+               mapToDTO(userRoleModel));
     }
 
     public ApiResponse<List<UserRoleDTO>> getAll() {
@@ -53,25 +47,34 @@ public class UserRoleService {
     }
 
     public ApiResponse<UserRoleDTO> create(UserRoleDTO userRoleDTO) {
-
         UserModel userModel = userService.findByIdModel(userRoleDTO.getUserId());
+        if (userModel == null) {
+            throw new NotFoundException(
+                    String.format("No se encontró el usuario con id %s", userRoleDTO.getUserId())
+            );
+        }
         RoleModel roleModel = roleService.findById(userRoleDTO.getRoleId());
-
+        if (roleModel == null) {
+            throw new NotFoundException(
+                    String.format("No se encontró el rol con id %s", userRoleDTO.getRoleId())
+            );
+        }
         UserRoleModel userRoleModel = UserRoleModel.builder()
                 .userModel(userModel)
                 .roleModel(roleModel)
                 .build();
+
         UserRoleModel savedUserRole = userRoleRepository.save(userRoleModel);
         return new ApiResponse<>(true, "Registro creado exitosamente", mapToDTO(savedUserRole));
     }
 
-    public ApiResponse delete(Long id) {
+
+    public void delete(Long id) {
         Optional<UserRoleModel> userRoleModelOptional = userRoleRepository.findById(id);
         if (userRoleModelOptional.isEmpty()) {
-            throw new NotFoundException(String.format("No se encontró el registro con el id {}", id));
+            throw new NotFoundException(String.format("No se encontró el registro con el id %s", id));
         }
         userRoleRepository.deleteById(id);
-        return new ApiResponse(true, "Registro eliminado exitosamente", null);
     }
 
     private UserRoleDTO mapToDTO(UserRoleModel userRoleModel) {
