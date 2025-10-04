@@ -59,16 +59,17 @@ class UserServiceTest {
 
     @Test
     void testSave() {
-        UsersDTO dto = new UsersDTO();
-        dto.setIdentification("123");
-        dto.setPassword("pass");
-        dto.setEmail("test@mail.com");
-        dto.setFirstName("John");
-        dto.setSecondName("D.");
-        dto.setLastName("Doe");
-        dto.setSecondLastName("Smith");
-        dto.setPhone("555-123");
-        dto.setIsActive(true);
+        UsersDTO dto = UsersDTO.builder()
+                .identification("123")
+                .password("pass")
+                .email("test@mail.com")
+                .firstName("John")
+                .secondName("D.")
+                .lastName("Doe")
+                .secondLastName("Smith")
+                .phone("555-123")
+                .isActive(true)
+                .build();
 
         UserModel savedUser = new UserModel();
         savedUser.setId(1L);
@@ -107,15 +108,14 @@ class UserServiceTest {
         existingUser.setPasswordHash("oldPass");
         existingUser.setPhone("000");
 
-        UsersDTO dto = new UsersDTO();
-        dto.setEmail("new@mail.com");
-        dto.setPassword("newPass");
-        dto.setPhone("111");
-
         when(userRepository.findById(1L)).thenReturn(Optional.of(existingUser));
         when(userRepository.save(any(UserModel.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
-        UserModel updated = userService.updateUser(1L, dto);
+        UserModel updated = userService.updateUser(1L, UsersDTO.builder()
+                .phone("111")
+                .email("new@mail.com")
+                .password("newPass")
+                .build());
 
         assertThat(updated.getEmail()).isEqualTo("new@mail.com");
         assertThat(updated.getPasswordHash()).isEqualTo("newPass");
@@ -130,16 +130,18 @@ class UserServiceTest {
         UserModel existingUser = new UserModel();
         existingUser.setId(1L);
 
-        UsersDTO dto = new UsersDTO();
-        dto.setIdentification("456");
-        dto.setPassword("updatedPass");
-        dto.setEmail("updated@mail.com");
-        dto.setFirstName("Alice");
-        dto.setSecondName("B.");
-        dto.setLastName("Wonderland");
-        dto.setSecondLastName("Smith");
-        dto.setPhone("777-8888");
-        dto.setIsActive(true);
+        UsersDTO dto = UsersDTO.builder()
+                .identification("456")
+                .password("updatedPass")
+                .email("updated@mail.com")
+                .firstName("Alice")
+                .secondName("B.")
+                .lastName("Wonderland")
+                .secondLastName("Smith")
+                .phone("777-8888")
+                .isActive(true)
+                .build();
+
 
         when(userRepository.findById(1L)).thenReturn(Optional.of(existingUser));
         when(userRepository.save(any(UserModel.class))).thenAnswer(invocation -> invocation.getArgument(0));
@@ -159,10 +161,11 @@ class UserServiceTest {
 
     @Test
     void testUpdateUser_UserNotFound() {
-        UsersDTO dto = new UsersDTO();
-        dto.setEmail("new@mail.com");
-        dto.setPassword("newPass");
-        dto.setPhone("111");
+        UsersDTO dto = UsersDTO.builder()
+                .email("new@mail.com")
+                .password("newPass")
+                .phone("111")
+                .build();
 
         when(userRepository.findById(1L)).thenReturn(Optional.empty());
 
