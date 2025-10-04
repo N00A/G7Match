@@ -6,6 +6,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -27,4 +30,7 @@ public class UserModel {
     private String secondLastName;
     private String phone;
     private Boolean isActive;
+
+    @OneToMany(mappedBy = "userModel", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<UserRoleModel> userRoles = new HashSet<>();
 }
