@@ -15,7 +15,7 @@ public class SportModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     private String name;
     @OneToMany(mappedBy = "sport", cascade = CascadeType.ALL)
     private List<CourtModel> courts;

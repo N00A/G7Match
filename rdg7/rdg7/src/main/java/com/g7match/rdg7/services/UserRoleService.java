@@ -80,7 +80,7 @@ public class UserRoleService {
     private UserRoleDTO mapToDTO(UserRoleModel userRoleModel) {
         return UserRoleDTO.builder()
                 .userId(userRoleModel.getUserModel().getId())
-                .roleId(Long.valueOf(userRoleModel.getRoleModel().getId()))
+                .roleId(userRoleModel.getRoleModel().getId())
                 .build();
     }
 }

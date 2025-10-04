@@ -71,8 +71,15 @@ public class SportService {
 
     public SportDTO mapToDTO(SportModel sportModel) {
         return SportDTO.builder()
-                .id(Long.valueOf(sportModel.getId()))
+                .id(sportModel.getId())
                 .name(sportModel.getName())
+                .build();
+    }
+
+    public SportModel mapToModel(SportDTO sportDTO){
+        return SportModel.builder()
+                .name(sportDTO.getName())
+                .id(sportDTO.getId())
                 .build();
     }
 

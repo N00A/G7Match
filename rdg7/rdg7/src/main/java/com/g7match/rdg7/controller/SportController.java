@@ -35,8 +35,6 @@ public class SportController {
 
     @PutMapping("/update-by-id")
     public ResponseEntity<ApiResponse<SportDTO>> update(@RequestBody SportDTO sportDTO){
-        System.out.println("Aqui va el request: "+sportDTO);
-
         return new ResponseEntity<>(sportService.update(sportDTO), HttpStatus.OK);
     }
 

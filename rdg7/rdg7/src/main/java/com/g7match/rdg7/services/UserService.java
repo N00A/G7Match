@@ -58,4 +58,34 @@ public class UserService {
         user.setPhone(dto.getPhone());
         user.setIsActive(dto.getIsActive());
     }
+
+    public UserModel mapUserModel(UsersDTO usersDTO){
+        return UserModel.builder()
+                .email(usersDTO.getEmail())
+                .firstName(usersDTO.getFirstName())
+                .phone(usersDTO.getPhone())
+                .secondLastName(usersDTO.getSecondName())
+                .lastName(usersDTO.getLastName())
+                .secondName(usersDTO.getSecondName())
+                .passwordHash(usersDTO.getPassword())
+                .identification(usersDTO.getIdentification())
+                .isActive(usersDTO.getIsActive())
+                .build();
+
+    }
+
+    public UsersDTO mapUserDTO (UserModel userModel){
+        return UsersDTO.builder()
+                .email(userModel.getEmail())
+                .phone(userModel.getPhone())
+                .firstName(userModel.getFirstName())
+                .secondName(userModel.getSecondName())
+                .identification(userModel.getIdentification())
+                .isActive(userModel.getIsActive())
+                .lastName(userModel.getLastName())
+                .password(userModel.getPasswordHash())
+                .secondLastName(userModel.getSecondLastName())
+                .build();
+
+    }
 }

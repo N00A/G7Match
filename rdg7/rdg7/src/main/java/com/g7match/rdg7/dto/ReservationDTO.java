@@ -3,14 +3,16 @@ package com.g7match.rdg7.dto;
 import lombok.Builder;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Data
 @Builder
 public class ReservationDTO {
-    private Integer id;
+    private Long id;
     private CourtDTO courtDTO;
     private UsersDTO userDTO;
-    private String startAt;
-    private String endAt;
+    private LocalDateTime startAt;
+    private LocalDateTime endAt;
     private String statusCode;
     private String notes;
 }
