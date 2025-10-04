@@ -8,6 +8,7 @@ import com.g7match.rdg7.model.CourtModel;
 import com.g7match.rdg7.model.SportModel;
 import com.g7match.rdg7.repository.CourtRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Optional;
@@ -88,6 +89,7 @@ public class CourtService {
                 .pricePerHour(courtDTO.getPricePerHour())
                 .location(courtDTO.getLocation())
                 .sport(sportService.mapToModel(courtDTO.getSportDTO()))
+                .isActive(courtDTO.getIsActive())
                 .build();
     }
 }

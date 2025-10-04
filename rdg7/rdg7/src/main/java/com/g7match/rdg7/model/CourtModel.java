@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "Court")
@@ -25,6 +27,7 @@ public class CourtModel {
     @JoinColumn(name = "Sport_id")
     private SportModel sport;
     private Float pricePerHour;
+    @Column(name = "Is_Active", nullable = false)
     private Boolean isActive;
 
     @OneToMany(mappedBy = "court", cascade = CascadeType.ALL)
