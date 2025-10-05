@@ -23,7 +23,8 @@ public class CourtService {
 
     public ApiResponse<List<CourtDTO>> getAll() {
         List<CourtDTO> sports =
-                courtRepository.findAll().stream().map(this::mapToDTO).toList();
+                courtRepository.findAllByIsActive(true)
+                        .stream().map(this::mapToDTO).toList();
 
         return new ApiResponse<>(true,
                 "Lista de registros consultada exitosamente", sports);
@@ -70,6 +71,19 @@ public class CourtService {
                 true,
                 "Registro actualizado exitosamente",
                 mapToDTO(updated)
+        );
+    }
+
+    public ApiResponse<CourtDTO> delete(Long id){
+        CourtModel courtModel = courtRepository.findById(id).orElseThrow(() -> new NotFoundException(
+                String.format("No se encontró la cancha con id %s", id)
+        ));
+        courtModel.setIsActive(false);
+        courtRepository.save(courtModel);
+        return new ApiResponse<>(
+                true,
+                "Registro eliminado exitosamente",
+                mapToDTO(courtModel)
         );
     }
 

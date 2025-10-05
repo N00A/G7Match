@@ -40,4 +40,9 @@ public class CourtController {
     public ResponseEntity<ApiResponse<CourtDTO>> update(@RequestBody CourtDTO courtDTO){
         return new ResponseEntity<>(courtService.update(courtDTO), HttpStatus.OK);
     }
+
+    @DeleteMapping("/delete-by-id/{id}")
+    public ResponseEntity<ApiResponse<CourtDTO>> deleteById(@PathVariable Long id){
+        return new ResponseEntity<>(courtService.delete(id), HttpStatus.OK);
+    }
 }
