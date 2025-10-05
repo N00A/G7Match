@@ -2,13 +2,10 @@ package com.g7match.rdg7.services;
 
 import com.g7match.rdg7.dto.ApiResponse;
 import com.g7match.rdg7.dto.CourtDTO;
-import com.g7match.rdg7.dto.SportDTO;
 import com.g7match.rdg7.exception.NotFoundException;
 import com.g7match.rdg7.model.CourtModel;
-import com.g7match.rdg7.model.SportModel;
 import com.g7match.rdg7.repository.CourtRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,7 +14,6 @@ import java.util.Optional;
 public class CourtService {
 
     private final CourtRepository courtRepository;
-
     private final SportService sportService;
 
     public CourtService(CourtRepository courtRepository, SportService sportService) {
@@ -45,11 +41,11 @@ public class CourtService {
     }
 
     public ApiResponse<CourtDTO> create(CourtDTO courtDTO){
-        courtRepository.save(this.mapToModel(courtDTO));
+        CourtModel saved = courtRepository.save(this.mapToModel(courtDTO));
         return new ApiResponse<>(
                 true,
                 "Registro creado exitosamente",
-                courtDTO
+                mapToDTO(saved)
         );
     }
 
@@ -58,23 +54,28 @@ public class CourtService {
         CourtModel courtModel = courtRepository.findById(courtDTO.getId()).orElseThrow(() -> new NotFoundException(
                 String.format("No se encontró la cancha con id %s", courtDTO.getId())
         ));
+
         Optional.ofNullable(courtDTO.getName()).ifPresent(courtModel::setName);
-        Optional.ofNullable(sportService.mapToModel(courtDTO.getSportDTO())).ifPresent(courtModel::setSport);
+        Optional.ofNullable(courtDTO.getSportDTO())
+                .map(sportService::mapToModel)
+                .ifPresent(courtModel::setSport);
+
         Optional.ofNullable(courtDTO.getLocation()).ifPresent(courtModel::setLocation);
         Optional.ofNullable(courtDTO.getPricePerHour()).ifPresent(courtModel::setPricePerHour);
         Optional.ofNullable(courtDTO.getIsActive()).ifPresent(courtModel::setIsActive);
 
-        courtRepository.save(courtModel);
+        CourtModel updated = courtRepository.save(courtModel);
 
         return new ApiResponse<>(
                 true,
                 "Registro actualizado exitosamente",
-                courtDTO
+                mapToDTO(updated)
         );
     }
 
     public CourtDTO mapToDTO(CourtModel courtModel) {
         return CourtDTO.builder()
+                .id(courtModel.getId() != null ? courtModel.getId().longValue() : null) // <-- INCLUIR ID
                 .sportDTO(sportService.mapToDTO(courtModel.getSport()))
                 .isActive(courtModel.getIsActive())
                 .name(courtModel.getName())
