@@ -2,7 +2,6 @@ package com.g7match.rdg7.services;
 
 import com.g7match.rdg7.dto.ApiResponse;
 import com.g7match.rdg7.dto.SportDTO;
-import com.g7match.rdg7.dto.UserRoleDTO;
 import com.g7match.rdg7.exception.NotFoundException;
 import com.g7match.rdg7.model.SportModel;
 import com.g7match.rdg7.repository.SportRepository;
@@ -16,7 +15,6 @@ public class SportService {
 
     private final SportRepository sportRepository;
 
-
     public SportService(SportRepository sportRepository) {
         this.sportRepository = sportRepository;
     }
@@ -25,31 +23,39 @@ public class SportService {
         List<SportDTO> sports =
                 sportRepository.findAllByIsActive(true).stream().map(this::mapToDTO).toList();
 
-        return new ApiResponse<>(true,
-                "Lista de registros consultada exitosamente", sports);
+        return new ApiResponse<>(
+                true,
+                "Lista de registros consultada exitosamente",
+                sports
+        );
     }
 
     public ApiResponse<SportDTO> getById(Long id) {
+        SportModel model = sportRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(
+                        String.format("No se encontró el deporte con id %s", id)
+                ));
+
         return new ApiResponse<>(
                 true,
                 "Registro consultado exitosamente",
-                mapToDTO(
-                        sportRepository.findById(id)
-                                .orElseThrow(() -> new NotFoundException(
-                                        String.format("No se encontró el deporte con id %s", id)
-                                ))));
+                mapToDTO(model)
+        );
     }
 
     public ApiResponse<SportDTO> create(SportDTO sportDTO){
-        sportRepository.save(
-                SportModel
-                        .builder()
-                        .name(sportDTO.getName())
-                        .build());
+        // Aseguramos isActive = TRUE al crear
+        SportModel toSave = SportModel.builder()
+                .name(sportDTO.getName())
+                .isActive(Boolean.TRUE)
+                .build();
+
+        SportModel saved = sportRepository.save(toSave);
+
         return new ApiResponse<>(
                 true,
                 "Registro creado exitosamente",
-                sportDTO
+                mapToDTO(saved)
         );
     }
 
@@ -59,15 +65,15 @@ public class SportService {
                 String.format("No se encontró el deporte con id %s", sportDTO.getId())
         ));
 
-        sportModel.setName(sportDTO.getName());
         Optional.ofNullable(sportDTO.getName()).ifPresent(sportModel::setName);
         Optional.ofNullable(sportDTO.getIsActive()).ifPresent(sportModel::setIsActive);
-        sportRepository.save(sportModel);
+
+        SportModel saved = sportRepository.save(sportModel);
 
         return new ApiResponse<>(
                 true,
                 "Registro actualizado exitosamente",
-                sportDTO
+                mapToDTO(saved)
         );
     }
 
@@ -76,11 +82,12 @@ public class SportService {
                 String.format("No se encontró el deporte con id %s", id)
         ));
         sportModel.setIsActive(Boolean.FALSE);
-        sportRepository.save(sportModel);
+        SportModel saved = sportRepository.save(sportModel);
+
         return new ApiResponse<>(
                 true,
                 "Registro eliminado exitosamente",
-                mapToDTO(sportModel)
+                mapToDTO(saved)
         );
     }
 
@@ -94,10 +101,10 @@ public class SportService {
 
     public SportModel mapToModel(SportDTO sportDTO){
         return SportModel.builder()
-                .name(sportDTO.getName())
                 .id(sportDTO.getId())
-                .isActive(sportDTO.getIsActive())
+                .name(sportDTO.getName())
+                // default TRUE si viene nulo
+                .isActive(sportDTO.getIsActive() != null ? sportDTO.getIsActive() : Boolean.TRUE)
                 .build();
     }
-
 }

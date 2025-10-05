@@ -39,9 +39,7 @@ public class SportController {
     }
 
     @DeleteMapping("/delete-by-id/{id}")
-    public ResponseEntity<ApiResponse<SportDTO>> update(@PathVariable Long id){
+    public ResponseEntity<ApiResponse<SportDTO>> delete(@PathVariable Long id){
         return new ResponseEntity<>(sportService.delete(id), HttpStatus.OK);
     }
-
-
 }
