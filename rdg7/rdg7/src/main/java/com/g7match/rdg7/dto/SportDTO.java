@@ -8,4 +8,5 @@ import lombok.Data;
 public class SportDTO {
     private Long id;
     private String name;
+    private Boolean isActive;
 }

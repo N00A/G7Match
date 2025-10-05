@@ -16,11 +16,8 @@ public class CourtModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
     private String name;
-
     private String location;
-
     @ManyToOne
     @JoinColumn(name = "Sport_id")
     private SportModel sport;

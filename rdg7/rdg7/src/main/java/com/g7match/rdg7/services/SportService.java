@@ -9,6 +9,7 @@ import com.g7match.rdg7.repository.SportRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SportService {
@@ -22,7 +23,7 @@ public class SportService {
 
     public ApiResponse<List<SportDTO>> getAllSports() {
         List<SportDTO> sports =
-                sportRepository.findAll().stream().map(this::mapToDTO).toList();
+                sportRepository.findAllByIsActive(true).stream().map(this::mapToDTO).toList();
 
         return new ApiResponse<>(true,
                 "Lista de registros consultada exitosamente", sports);
@@ -59,7 +60,8 @@ public class SportService {
         ));
 
         sportModel.setName(sportDTO.getName());
-
+        Optional.ofNullable(sportDTO.getName()).ifPresent(sportModel::setName);
+        Optional.ofNullable(sportDTO.getIsActive()).ifPresent(sportModel::setIsActive);
         sportRepository.save(sportModel);
 
         return new ApiResponse<>(
@@ -69,10 +71,24 @@ public class SportService {
         );
     }
 
+    public ApiResponse<SportDTO> delete(Long id){
+        SportModel sportModel = sportRepository.findById(id).orElseThrow(() -> new NotFoundException(
+                String.format("No se encontró el deporte con id %s", id)
+        ));
+        sportModel.setIsActive(Boolean.FALSE);
+        sportRepository.save(sportModel);
+        return new ApiResponse<>(
+                true,
+                "Registro eliminado exitosamente",
+                mapToDTO(sportModel)
+        );
+    }
+
     public SportDTO mapToDTO(SportModel sportModel) {
         return SportDTO.builder()
                 .id(sportModel.getId())
                 .name(sportModel.getName())
+                .isActive(sportModel.getIsActive())
                 .build();
     }
 
@@ -80,6 +96,7 @@ public class SportService {
         return SportModel.builder()
                 .name(sportDTO.getName())
                 .id(sportDTO.getId())
+                .isActive(sportDTO.getIsActive())
                 .build();
     }
 
