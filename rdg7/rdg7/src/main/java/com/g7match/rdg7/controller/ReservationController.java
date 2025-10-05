@@ -39,4 +39,9 @@ public class ReservationController {
     public ResponseEntity<ApiResponse<ReservationDTO>> update(@RequestBody ReservationDTO reservationDTO){
         return new ResponseEntity<>(reservationService.update(reservationDTO), HttpStatus.OK);
     }
+
+        @DeleteMapping("/delete-by-id/{id}")
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
+        return new ResponseEntity<>(reservationService.delete(id), HttpStatus.OK);
+    }
 }
