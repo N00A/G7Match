@@ -2,8 +2,6 @@ package com.g7match.rdg7.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import com.g7match.rdg7.model.UserModel;
-
 import java.util.HashSet;
 import java.util.Set;
 

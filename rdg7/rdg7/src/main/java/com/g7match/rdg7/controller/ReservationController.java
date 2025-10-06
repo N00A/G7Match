@@ -2,13 +2,11 @@ package com.g7match.rdg7.controller;
 
 import com.g7match.rdg7.dto.ApiResponse;
 import com.g7match.rdg7.dto.ReservationDTO;
-import com.g7match.rdg7.dto.ReservationDTO;
 import com.g7match.rdg7.services.ReservationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

@@ -5,7 +5,6 @@ import com.g7match.rdg7.controller.UserController;
 import com.g7match.rdg7.dto.UsersDTO;
 import com.g7match.rdg7.model.UserModel;
 import com.g7match.rdg7.services.UserService;
-import org.apache.catalina.User;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
