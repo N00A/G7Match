@@ -17,7 +17,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.NoSuchElementException;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.nullValue;
@@ -81,10 +80,10 @@ class SportControllerTest {
         Mockito.when(sportService.getById(99L))
                 .thenThrow(new NotFoundException("No se encontró el deporte con id 99"));
 
-        mockMvc.perform(get("/sport/get-by-id/1").param("id", "99"))
-                .andExpect(status().isBadRequest())
+        mockMvc.perform(get("/sport/get-by-id/99").param("id", "99"))
+                .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.success").value(false))
-                .andExpect(jsonPath("$.message", containsString("Error al consultar el deporte")))
+                .andExpect(jsonPath("$.message", containsString("No se encontró el deporte con id 99")))
                 .andExpect(jsonPath("$.data").value(nullValue()));
     }
 

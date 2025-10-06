@@ -3,7 +3,7 @@ package com.g7match.rdg7.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Table(name = "Reservation")
@@ -24,8 +24,8 @@ public class ReservationModel {
     @ManyToOne
     @JoinColumn(name = "User_id")
     private UserModel user;
-    private LocalDateTime startAt;
-    private LocalDateTime endAt;
+    private Date startAt;
+    private Date endAt;
     private String statusCode;
     private String notes;
 }
