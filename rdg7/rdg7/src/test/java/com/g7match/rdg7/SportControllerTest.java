@@ -1,7 +1,6 @@
 package com.g7match.rdg7;
 
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.g7match.rdg7.controller.SportController;
 import com.g7match.rdg7.dto.ApiResponse;
 import com.g7match.rdg7.dto.SportDTO;
@@ -43,7 +42,6 @@ class SportControllerTest {
     @Autowired
     private SportService sportService;
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @AfterEach
     void resetMocks() {

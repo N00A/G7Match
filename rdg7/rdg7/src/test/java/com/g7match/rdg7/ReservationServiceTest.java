@@ -10,7 +10,6 @@ import com.g7match.rdg7.repository.ReservationRepository;
 import com.g7match.rdg7.repository.UserRepository;
 import com.g7match.rdg7.services.CourtService;
 import com.g7match.rdg7.services.ReservationService;
-import com.g7match.rdg7.services.SportService;
 import com.g7match.rdg7.services.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,7 +34,6 @@ class ReservationServiceTest {
     private UserService userService;
     private CourtService courtService;
     private ReservationService reservationService;
-    private SportService sportService;
 
     @BeforeEach
     void setUp() {
@@ -43,7 +41,6 @@ class ReservationServiceTest {
         userRepository = mock(UserRepository.class);
         courtRepository = mock(CourtRepository.class);
         userService = mock(UserService.class);
-        sportService = mock(SportService.class);
         courtService = mock(CourtService.class);
         reservationService = new ReservationService(
                 reservationRepository, userRepository, courtRepository, userService, courtService);

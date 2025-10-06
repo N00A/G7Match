@@ -23,6 +23,8 @@ public class ReservationService {
     private final UserService userService;
     private final CourtService courtService;
 
+    private static final String RESERVATION_NOT_FOUND_MSG = "No se encontró la reserva con id %s";
+
     public ReservationService(
             ReservationRepository reservationRepository,
             UserRepository userRepository,
@@ -40,7 +42,7 @@ public class ReservationService {
     public ApiResponse<ReservationDTO> getById(Long id) {
         ReservationModel model = reservationRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(
-                        String.format("No se encontró la reserva con id %s", id)
+                        String.format(RESERVATION_NOT_FOUND_MSG, id)
                 ));
         return new ApiResponse<>(true, "Registro consultado exitosamente", mapToDTO(model));
     }
@@ -79,7 +81,7 @@ public class ReservationService {
     public ApiResponse<ReservationDTO> update(ReservationDTO dto) {
         ReservationModel existing = reservationRepository.findById(dto.getId())
                 .orElseThrow(() -> new NotFoundException(
-                        String.format("No se encontró la reserva con id %s", dto.getId())
+                        String.format(RESERVATION_NOT_FOUND_MSG, dto.getId())
                 ));
 
         Optional.ofNullable(dto.getStartAt()).ifPresent(existing::setStartAt);
@@ -107,7 +109,7 @@ public class ReservationService {
     public ApiResponse<Void> delete(Long id) {
         ReservationModel model = reservationRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(
-                        String.format("No se encontró la reserva con id %s", id)
+                        String.format(RESERVATION_NOT_FOUND_MSG, id)
                 ));
         reservationRepository.delete(model);
         return new ApiResponse<>(true, "Reserva eliminada exitosamente", null);
@@ -116,17 +118,6 @@ public class ReservationService {
     // === MAP TO DTO ===
     private ReservationDTO mapToDTO(ReservationModel model) {
         var userDTO = userService.mapUserDTO(model.getUser());
-
-        if (userDTO != null && model.getUser() != null && model.getUser().getId() > 0) {
-            try {
-                // Usa reflexión o setter si existe, sin modificar UsersDTO
-                var field = userDTO.getClass().getDeclaredField("id");
-                field.setAccessible(true);
-                field.set(userDTO, model.getUser().getId());
-            } catch (NoSuchFieldException | IllegalAccessException ignored) {
-                // Si el campo no existe, lo ignoramos silenciosamente
-            }
-        }
 
         return ReservationDTO.builder()
                 .id(model.getId() != null ? model.getId().longValue() : null)

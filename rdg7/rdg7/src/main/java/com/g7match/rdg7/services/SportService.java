@@ -15,6 +15,8 @@ public class SportService {
 
     private final SportRepository sportRepository;
 
+    private static final String SPORT_NOT_FOUND_MSG = "No se encontró el deporte con id %s";
+
     public SportService(SportRepository sportRepository) {
         this.sportRepository = sportRepository;
     }
@@ -33,7 +35,7 @@ public class SportService {
     public ApiResponse<SportDTO> getById(Long id) {
         SportModel model = sportRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(
-                        String.format("No se encontró el deporte con id %s", id)
+                        String.format(SPORT_NOT_FOUND_MSG, id)
                 ));
 
         return new ApiResponse<>(
@@ -62,7 +64,7 @@ public class SportService {
     public ApiResponse<SportDTO> update(SportDTO sportDTO){
 
         SportModel sportModel = sportRepository.findById(sportDTO.getId()).orElseThrow(() -> new NotFoundException(
-                String.format("No se encontró el deporte con id %s", sportDTO.getId())
+                String.format(SPORT_NOT_FOUND_MSG, sportDTO.getId())
         ));
 
         Optional.ofNullable(sportDTO.getName()).ifPresent(sportModel::setName);
@@ -79,7 +81,7 @@ public class SportService {
 
     public ApiResponse<SportDTO> delete(Long id){
         SportModel sportModel = sportRepository.findById(id).orElseThrow(() -> new NotFoundException(
-                String.format("No se encontró el deporte con id %s", id)
+                String.format(SPORT_NOT_FOUND_MSG, id)
         ));
         sportModel.setIsActive(Boolean.FALSE);
         SportModel saved = sportRepository.save(sportModel);

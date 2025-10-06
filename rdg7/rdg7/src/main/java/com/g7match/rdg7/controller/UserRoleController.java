@@ -2,8 +2,6 @@ package com.g7match.rdg7.controller;
 
 import com.g7match.rdg7.dto.ApiResponse;
 import com.g7match.rdg7.dto.UserRoleDTO;
-import com.g7match.rdg7.model.UserModel;
-import com.g7match.rdg7.model.UserRoleModel;
 import com.g7match.rdg7.services.UserRoleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +20,6 @@ public class UserRoleController {
 
     @GetMapping("/get-by-id/{id}")
     public ResponseEntity<ApiResponse<UserRoleDTO>> getById(@PathVariable("id") Long id) {
-        System.out.println("ID recibido: " + id);
         return new ResponseEntity<>(userRoleService.getById(id), HttpStatus.OK);
     }
 
@@ -35,7 +32,6 @@ public class UserRoleController {
     public ResponseEntity<ApiResponse<UserRoleDTO>> createUserRole(@RequestBody UserRoleDTO userRoleDTO) {
         return new ResponseEntity<>(userRoleService.create(userRoleDTO), HttpStatus.OK);
     }
-
     @DeleteMapping("/delete-by-id/{id}")
     public ResponseEntity<ApiResponse<Void>> deleteUserRole(@PathVariable Long id) {
         userRoleService.delete(id);
