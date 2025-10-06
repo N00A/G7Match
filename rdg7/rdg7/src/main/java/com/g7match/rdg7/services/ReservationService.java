@@ -2,11 +2,13 @@ package com.g7match.rdg7.services;
 
 import com.g7match.rdg7.dto.ApiResponse;
 import com.g7match.rdg7.dto.ReservationDTO;
-import com.g7match.rdg7.dto.RoleDTO;
 import com.g7match.rdg7.exception.NotFoundException;
+import com.g7match.rdg7.model.CourtModel;
 import com.g7match.rdg7.model.ReservationModel;
-import com.g7match.rdg7.model.RoleModel;
+import com.g7match.rdg7.model.UserModel;
+import com.g7match.rdg7.repository.CourtRepository;
 import com.g7match.rdg7.repository.ReservationRepository;
+import com.g7match.rdg7.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,88 +18,125 @@ import java.util.Optional;
 public class ReservationService {
 
     private final ReservationRepository reservationRepository;
-
+    private final UserRepository userRepository;
+    private final CourtRepository courtRepository;
     private final UserService userService;
-
     private final CourtService courtService;
 
-    public ReservationService(ReservationRepository reservationRepository, UserService userService, CourtService courtService) {
+    public ReservationService(
+            ReservationRepository reservationRepository,
+            UserRepository userRepository,
+            CourtRepository courtRepository,
+            UserService userService,
+            CourtService courtService) {
         this.reservationRepository = reservationRepository;
+        this.userRepository = userRepository;
+        this.courtRepository = courtRepository;
         this.userService = userService;
         this.courtService = courtService;
     }
 
+    // === GET BY ID ===
     public ApiResponse<ReservationDTO> getById(Long id) {
-        return new ApiResponse<>(
-                true,
-                "Registro consultado exitosamente",
-                mapToDTO(
-                        reservationRepository.findById(id)
-                                .orElseThrow(() -> new NotFoundException(
-                                        String.format("No se encontró el deporte con id %s", id)
-                                ))));
+        ReservationModel model = reservationRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(
+                        String.format("No se encontró la reserva con id %s", id)
+                ));
+        return new ApiResponse<>(true, "Registro consultado exitosamente", mapToDTO(model));
     }
 
-    public ApiResponse<List<ReservationDTO>> getAll(){
-        List<ReservationDTO> reservationDTOS =
-                reservationRepository.findAll().stream().map(this::mapToDTO).toList();
-
-        return new ApiResponse<>(true,
-                "Lista de registros consultada exitosamente", reservationDTOS);
+    // === GET ALL ===
+    public ApiResponse<List<ReservationDTO>> getAll() {
+        List<ReservationDTO> list = reservationRepository.findAll().stream()
+                .map(this::mapToDTO)
+                .toList();
+        return new ApiResponse<>(true, "Lista de registros consultada exitosamente", list);
     }
 
-    public ApiResponse<ReservationDTO> create (ReservationDTO reservationDTO){
-        reservationRepository.save(this.mapToModel(reservationDTO));
-        return new ApiResponse<>(
-                true,
-                "Registro creado exitosamente",
-                reservationDTO
-        );
+    // === CREATE ===
+    public ApiResponse<ReservationDTO> create(ReservationDTO dto) {
+
+        UserModel user = userRepository.findById(dto.getUserDTO().getId())
+                .orElseThrow(() -> new NotFoundException("Usuario no encontrado"));
+        CourtModel court = courtRepository.findById(dto.getCourtDTO().getId())
+                .orElseThrow(() -> new NotFoundException("Cancha no encontrada"));
+
+        ReservationModel model = ReservationModel.builder()
+                .user(user)
+                .court(court)
+                .startAt(dto.getStartAt())
+                .endAt(dto.getEndAt())
+                .statusCode(dto.getStatusCode())
+                .notes(dto.getNotes())
+                .build();
+
+        reservationRepository.save(model);
+
+        return new ApiResponse<>(true, "Registro creado exitosamente", mapToDTO(model));
     }
 
-    public ApiResponse<ReservationDTO> update(ReservationDTO reservationDTO){
+    // === UPDATE ===
+    public ApiResponse<ReservationDTO> update(ReservationDTO dto) {
+        ReservationModel existing = reservationRepository.findById(dto.getId())
+                .orElseThrow(() -> new NotFoundException(
+                        String.format("No se encontró la reserva con id %s", dto.getId())
+                ));
 
-        ReservationModel reservationModel = reservationRepository.
-                findById(reservationDTO.getId()).orElseThrow(() -> new NotFoundException(
-                String.format("No se encontró la reserva con id %s", reservationDTO.getId())
-        ));
+        Optional.ofNullable(dto.getStartAt()).ifPresent(existing::setStartAt);
+        Optional.ofNullable(dto.getEndAt()).ifPresent(existing::setEndAt);
+        Optional.ofNullable(dto.getStatusCode()).ifPresent(existing::setStatusCode);
+        Optional.ofNullable(dto.getNotes()).ifPresent(existing::setNotes);
 
-        Optional.ofNullable(userService.mapUserModel(reservationDTO.getUserDTO())).ifPresent(reservationModel::setUser);
-        Optional.ofNullable(courtService.mapToModel(reservationDTO.getCourtDTO())).ifPresent(reservationModel::setCourt);
-        Optional.ofNullable(reservationDTO.getEndAt()).ifPresent(reservationModel::setEndAt);
-        Optional.ofNullable(reservationDTO.getStartAt()).ifPresent(reservationModel::setStartAt);
-        Optional.ofNullable(reservationDTO.getStatusCode()).ifPresent(reservationModel::setStatusCode);
-        Optional.ofNullable(reservationDTO.getNotes()).ifPresent(reservationModel::setNotes);
+        if (dto.getUserDTO() != null && dto.getUserDTO().getId() != null) {
+            UserModel user = userRepository.findById(dto.getUserDTO().getId())
+                    .orElseThrow(() -> new NotFoundException("Usuario no encontrado"));
+            existing.setUser(user);
+        }
 
+        if (dto.getCourtDTO() != null && dto.getCourtDTO().getId() != null) {
+            CourtModel court = courtRepository.findById(dto.getCourtDTO().getId())
+                    .orElseThrow(() -> new NotFoundException("Cancha no encontrada"));
+            existing.setCourt(court);
+        }
 
-        reservationRepository.save(reservationModel);
-
-        return new ApiResponse<>(
-                true,
-                "Registro actualizado exitosamente",
-                reservationDTO
-        );
+        reservationRepository.save(existing);
+        return new ApiResponse<>(true, "Registro actualizado exitosamente", mapToDTO(existing));
     }
 
+    // === DELETE ===
+    public ApiResponse<Void> delete(Long id) {
+        ReservationModel model = reservationRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(
+                        String.format("No se encontró la reserva con id %s", id)
+                ));
+        reservationRepository.delete(model);
+        return new ApiResponse<>(true, "Reserva eliminada exitosamente", null);
+    }
 
-    private ReservationDTO mapToDTO(ReservationModel reservationModel) {
+    // === MAP TO DTO ===
+    private ReservationDTO mapToDTO(ReservationModel model) {
+        var userDTO = userService.mapUserDTO(model.getUser());
+
+        if (userDTO != null && model.getUser() != null && model.getUser().getId() > 0) {
+            try {
+                // Usa reflexión o setter si existe, sin modificar UsersDTO
+                var field = userDTO.getClass().getDeclaredField("id");
+                field.setAccessible(true);
+                field.set(userDTO, model.getUser().getId());
+            } catch (NoSuchFieldException | IllegalAccessException ignored) {
+                // Si el campo no existe, lo ignoramos silenciosamente
+            }
+        }
+
         return ReservationDTO.builder()
-                .userDTO(userService.mapUserDTO(reservationModel.getUser()))
-                .courtDTO(null)
-                .endAt(reservationModel.getEndAt())
-                .notes(reservationModel.getNotes())
-                .startAt(reservationModel.getStartAt())
-                .statusCode(reservationModel.getStatusCode())
+                .id(model.getId() != null ? model.getId().longValue() : null)
+                .userDTO(userDTO)
+                .courtDTO(courtService.mapToDTO(model.getCourt()))
+                .startAt(model.getStartAt())
+                .endAt(model.getEndAt())
+                .statusCode(model.getStatusCode())
+                .notes(model.getNotes())
                 .build();
     }
 
-    private ReservationModel mapToModel(ReservationDTO reservationDTO){
-        return ReservationModel.builder()
-                .court(null)
-                .user(userService.mapUserModel(reservationDTO.getUserDTO()))
-                .startAt(reservationDTO.getStartAt())
-                .notes(reservationDTO.getNotes())
-                .statusCode(reservationDTO.getStatusCode())
-                .build();
-    }
 }

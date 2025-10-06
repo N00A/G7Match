@@ -21,26 +21,26 @@ public class ReservationController {
     private final ReservationService reservationService;
 
     @GetMapping("/get-all")
-    public ResponseEntity<ApiResponse<List<ReservationDTO>>> getAll(){
+    public ResponseEntity<ApiResponse<List<ReservationDTO>>> getAll() {
         return new ResponseEntity<>(reservationService.getAll(), HttpStatus.OK);
     }
 
     @GetMapping("/get-by-id/{id}")
-    public ResponseEntity<ApiResponse<ReservationDTO>> getById(@PathVariable Long id){
+    public ResponseEntity<ApiResponse<ReservationDTO>> getById(@PathVariable Long id) {
         return new ResponseEntity<>(reservationService.getById(id), HttpStatus.OK);
     }
 
     @PostMapping("/create")
-    public ResponseEntity<ApiResponse<ReservationDTO>> create(@RequestBody ReservationDTO reservationDTO){
+    public ResponseEntity<ApiResponse<ReservationDTO>> create(@RequestBody ReservationDTO reservationDTO) {
         return new ResponseEntity<>(reservationService.create(reservationDTO), HttpStatus.OK);
     }
 
     @PutMapping("/update-by-id")
-    public ResponseEntity<ApiResponse<ReservationDTO>> update(@RequestBody ReservationDTO reservationDTO){
+    public ResponseEntity<ApiResponse<ReservationDTO>> update(@RequestBody ReservationDTO reservationDTO) {
         return new ResponseEntity<>(reservationService.update(reservationDTO), HttpStatus.OK);
     }
 
-        @DeleteMapping("/delete-by-id/{id}")
+    @DeleteMapping("/delete-by-id/{id}")
     public ResponseEntity<ApiResponse<Void>> delete(@PathVariable Long id) {
         return new ResponseEntity<>(reservationService.delete(id), HttpStatus.OK);
     }
