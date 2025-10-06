@@ -44,7 +44,7 @@ class ReservationServiceTest {
         courtRepository = mock(CourtRepository.class);
         userService = mock(UserService.class);
         sportService = mock(SportService.class);
-        courtService = new CourtService(courtRepository, sportService);
+        courtService = mock(CourtService.class);
         reservationService = new ReservationService(
                 reservationRepository, userRepository, courtRepository, userService, courtService);
     }
@@ -217,13 +217,7 @@ class ReservationServiceTest {
         // Mock para los mapeos de DTOs
         when(userService.mapUserDTO(any(UserModel.class))).thenReturn(userDTO);
         when(courtService.mapToDTO(any(CourtModel.class))).thenReturn(courtDTO);
-        // Mock para el mapeo de SportDTO
-        SportDTO sportDTO = SportDTO.builder()
-            .id(1L)
-            .name("Fútbol")
-            .isActive(true)
-            .build();
-        when(sportService.mapToDTO(any())).thenReturn(sportDTO);
+        // Nota: no se requiere mock de SportService ya que CourtService está mockeado
 
         ApiResponse<ReservationDTO> response = reservationService.create(reservationDTO);
 

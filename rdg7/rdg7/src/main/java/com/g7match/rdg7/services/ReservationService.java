@@ -70,9 +70,9 @@ public class ReservationService {
                 .notes(dto.getNotes())
                 .build();
 
-        reservationRepository.save(model);
+        ReservationModel saved = reservationRepository.save(model);
 
-        return new ApiResponse<>(true, "Registro creado exitosamente", mapToDTO(model));
+        return new ApiResponse<>(true, "Registro creado exitosamente", mapToDTO(saved));
     }
 
     // === UPDATE ===
