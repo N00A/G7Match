@@ -2,13 +2,11 @@ package com.g7match.rdg7.controller;
 
 import com.g7match.rdg7.dto.ApiResponse;
 import com.g7match.rdg7.dto.RoleDTO;
-import com.g7match.rdg7.dto.RoleDTO;
 import com.g7match.rdg7.services.RoleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,12 +29,12 @@ public class RoleController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<ApiResponse<RoleDTO>> create(@RequestBody RoleDTO RoleDTO){
-        return new ResponseEntity<>(roleService.create(RoleDTO), HttpStatus.OK);
+    public ResponseEntity<ApiResponse<RoleDTO>> create(@RequestBody RoleDTO roleDTO){
+        return new ResponseEntity<>(roleService.create(roleDTO), HttpStatus.OK);
     }
 
     @PutMapping("/update-by-id")
-    public ResponseEntity<ApiResponse<RoleDTO>> update(@RequestBody RoleDTO RoleDTO){
-        return new ResponseEntity<>(roleService.update(RoleDTO), HttpStatus.OK);
+    public ResponseEntity<ApiResponse<RoleDTO>> update(@RequestBody RoleDTO roleDTO){
+        return new ResponseEntity<>(roleService.update(roleDTO), HttpStatus.OK);
     }
 }

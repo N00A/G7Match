@@ -3,8 +3,6 @@ package com.g7match.rdg7.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
-
 @Entity
 @Table(name = "user_roles")
 @Data
