@@ -50,14 +50,7 @@ public class ReservationService {
     // === GET ALL ===
     public ApiResponse<List<ReservationDTO>> getAll() {
         List<ReservationDTO> list = reservationRepository.findAll().stream()
-                .map(reservation -> {
-                    try {
-                        return mapToDTO(reservation);
-                    } catch (NotFoundException e) {
-                        // Puedes loguear el error aquí si lo deseas
-                        return null;
-                    }
-                })
+                .map(this::mapToDTO)
                 .filter(java.util.Objects::nonNull)
                 .toList();
         return new ApiResponse<>(true, "Lista de registros consultada exitosamente", list);
