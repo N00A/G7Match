@@ -112,6 +112,7 @@ public class ReservationService {
         return ReservationDTO.builder()
                 .id(model.getId())
                 .userDTO(userDTO)
+                .userId(userDTO.getId())
                 .courtDTO(courtService.mapToDTO(model.getCourt()))
                 .startAt(model.getStartAt())
                 .endAt(model.getEndAt())
