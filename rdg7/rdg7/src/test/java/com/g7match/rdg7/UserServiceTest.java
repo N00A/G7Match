@@ -1,8 +1,6 @@
 package com.g7match.rdg7;
 
-import com.g7match.rdg7.dto.SportDTO;
 import com.g7match.rdg7.dto.UsersDTO;
-import com.g7match.rdg7.model.SportModel;
 import com.g7match.rdg7.model.UserModel;
 import com.g7match.rdg7.repository.UserRepository;
 import com.g7match.rdg7.services.UserService;
@@ -10,8 +8,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import java.util.*;
-
-import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
