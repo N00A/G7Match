@@ -89,7 +89,7 @@ public class CourtService {
 
     public CourtDTO mapToDTO(CourtModel courtModel) {
         return CourtDTO.builder()
-                .id(courtModel.getId() != null ? courtModel.getId().longValue() : null) // <-- INCLUIR ID
+                .id(courtModel.getId())
                 .sportDTO(sportService.mapToDTO(courtModel.getSport()))
                 .isActive(courtModel.getIsActive())
                 .name(courtModel.getName())

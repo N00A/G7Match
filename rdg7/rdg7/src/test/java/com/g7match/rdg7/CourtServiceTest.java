@@ -43,7 +43,7 @@ class CourtServiceTest {
                 .build();
 
         CourtModel court1 = CourtModel.builder()
-                .id(1)
+                .id(1L)
                 .name("Cancha 1")
                 .location("Zona Norte")
                 .pricePerHour(50000f)
@@ -52,7 +52,7 @@ class CourtServiceTest {
                 .build();
 
         CourtModel court2 = CourtModel.builder()
-                .id(2)
+                .id(2L)
                 .name("Cancha 2")
                 .location("Zona Sur")
                 .pricePerHour(60000f)
@@ -91,7 +91,7 @@ class CourtServiceTest {
                 .build();
 
         CourtModel court = CourtModel.builder()
-                .id(1)
+                .id(1L)
                 .name("Cancha 1")
                 .location("Zona Norte")
                 .pricePerHour(50000f)
@@ -155,7 +155,7 @@ class CourtServiceTest {
                 .build();
 
         CourtModel savedCourt = CourtModel.builder()
-                .id(1)
+                .id(1L)
                 .name("Cancha Nueva")
                 .location("Zona Centro")
                 .pricePerHour(70000f)
@@ -206,7 +206,7 @@ class CourtServiceTest {
                 .build();
 
         CourtModel existingCourt = CourtModel.builder()
-                .id(1)
+                .id(1L)
                 .name("Cancha Original")
                 .location("Zona Original")
                 .pricePerHour(50000f)
@@ -215,7 +215,7 @@ class CourtServiceTest {
                 .build();
 
         CourtModel updatedCourt = CourtModel.builder()
-                .id(1)
+                .id(1L)
                 .name("Cancha Actualizada")
                 .location("Zona Nueva")
                 .pricePerHour(80000f)
@@ -265,7 +265,7 @@ class CourtServiceTest {
                 .build();
 
         CourtModel existingCourt = CourtModel.builder()
-                .id(1)
+                .id(1L)
                 .name("Cancha 1")
                 .location("Zona Norte")
                 .pricePerHour(50000f)
@@ -274,7 +274,7 @@ class CourtServiceTest {
                 .build();
 
         CourtModel deletedCourt = CourtModel.builder()
-                .id(1)
+                .id(1L)
                 .name("Cancha 1")
                 .location("Zona Norte")
                 .pricePerHour(50000f)
@@ -318,7 +318,7 @@ class CourtServiceTest {
                 .build();
 
         CourtModel courtModel = CourtModel.builder()
-                .id(1)
+                .id(1L)
                 .name("Cancha 1")
                 .location("Zona Norte")
                 .pricePerHour(50000f)

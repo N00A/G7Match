@@ -55,12 +55,12 @@ class ReservationServiceTest {
                 .build();
 
         CourtModel courtModel = CourtModel.builder()
-                .id(1)
+                .id(1L)
                 .name("Cancha 1")
                 .build();
 
         ReservationModel reservation = ReservationModel.builder()
-                .id(1)
+                .id(1L)
                 .user(userModel)
                 .court(courtModel)
                 .startAt(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000)) // mañana
@@ -115,12 +115,12 @@ class ReservationServiceTest {
                 .build();
 
         CourtModel courtModel = CourtModel.builder()
-                .id(1)
+                .id(1L)
                 .name("Cancha 1")
                 .build();
 
         ReservationModel reservation1 = ReservationModel.builder()
-                .id(1)
+                .id(1L)
                 .user(userModel)
                 .court(courtModel)
                 .startAt(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000)) // mañana
@@ -129,7 +129,7 @@ class ReservationServiceTest {
                 .build();
 
         ReservationModel reservation2 = ReservationModel.builder()
-                .id(2)
+                .id(2L)
                 .user(userModel)
                 .court(courtModel)
                 .startAt(new Date(System.currentTimeMillis() + 2 * 24 * 60 * 60 * 1000)) // pasado mañana
@@ -193,7 +193,7 @@ class ReservationServiceTest {
                 .build();
 
         CourtModel courtModel = CourtModel.builder()
-                .id(1)
+                .id(1L)
                 .name("Cancha 1")
                 .build();
 
@@ -201,7 +201,7 @@ class ReservationServiceTest {
         when(courtRepository.findById(1L)).thenReturn(Optional.of(courtModel));
 
         ReservationModel savedReservation = ReservationModel.builder()
-                .id(1)
+                .id(1L)
                 .user(userModel)
                 .court(courtModel)
                 .startAt(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000)) // mañana
@@ -328,12 +328,12 @@ class ReservationServiceTest {
                 .build();
 
         CourtModel courtModel = CourtModel.builder()
-                .id(1)
+                .id(1L)
                 .name("Cancha 1")
                 .build();
 
         ReservationModel existingReservation = ReservationModel.builder()
-                .id(1)
+                .id(1L)
                 .user(userModel)
                 .court(courtModel)
                 .startAt(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000)) // mañana
@@ -343,8 +343,6 @@ class ReservationServiceTest {
                 .build();
 
         when(reservationRepository.findById(1L)).thenReturn(Optional.of(existingReservation));
-        when(userRepository.findById(1L)).thenReturn(Optional.of(userModel));
-        when(courtRepository.findById(1L)).thenReturn(Optional.of(courtModel));
         when(reservationRepository.save(any(ReservationModel.class))).thenReturn(existingReservation);
 
         ApiResponse<ReservationDTO> response = reservationService.update(reservationDTO);
@@ -382,12 +380,12 @@ class ReservationServiceTest {
                 .build();
 
         CourtModel courtModel = CourtModel.builder()
-                .id(1)
+                .id(1L)
                 .name("Cancha 1")
                 .build();
 
         ReservationModel reservation = ReservationModel.builder()
-                .id(1)
+                .id(1L)
                 .user(userModel)
                 .court(courtModel)
                 .startAt(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000)) // mañana
