@@ -111,7 +111,9 @@ class UserControllerTest {
 
     @Test
     void testCreateUser_Success() throws Exception {
-        UsersDTO dto = new UsersDTO();
+        UsersDTO dto = UsersDTO.builder()
+                .email("cristian@example.com")
+                .build();
         dto.setEmail("cristian@example.com");
 
         UserModel savedUser = new UserModel();
@@ -131,8 +133,7 @@ class UserControllerTest {
 
     @Test
     void testCreateUser_Error() throws Exception {
-        UsersDTO dto = new UsersDTO();
-        dto.setEmail("bad@example.com");
+        UsersDTO dto = UsersDTO.builder().email("bad@example.com").build();
 
         Mockito.when(userService.save(any(UsersDTO.class)))
                 .thenThrow(new IllegalArgumentException("invalid"));
@@ -171,7 +172,9 @@ class UserControllerTest {
 
     @Test
     void testUpdateUser_Success() throws Exception {
-        UsersDTO dto = new UsersDTO();
+        UsersDTO dto = UsersDTO.builder()
+                .email("updated@example.com")
+                .build();
         dto.setEmail("updated@example.com");
 
         Mockito.when(userService.updateUser(eq(1L), any(UsersDTO.class)))
@@ -188,8 +191,9 @@ class UserControllerTest {
 
     @Test
     void testUpdateUser_Error() throws Exception {
-        UsersDTO dto = new UsersDTO();
-        dto.setEmail("bad@example.com");
+        UsersDTO dto = UsersDTO.builder()
+                .email("bad@example.com")
+                .build();
 
         Mockito.when(userService.updateUser(eq(9L), any(UsersDTO.class)))
                 .thenThrow(new RuntimeException("cannot update"));
