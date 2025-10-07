@@ -1,6 +1,8 @@
 package com.g7match.rdg7;
 
+import com.g7match.rdg7.dto.SportDTO;
 import com.g7match.rdg7.dto.UsersDTO;
+import com.g7match.rdg7.model.SportModel;
 import com.g7match.rdg7.model.UserModel;
 import com.g7match.rdg7.repository.UserRepository;
 import com.g7match.rdg7.services.UserService;
@@ -8,6 +10,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import java.util.*;
+
+import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -32,6 +36,21 @@ class UserServiceTest {
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
 
         UserModel result = userService.findById(1L);
+
+        assertThat(result).isNotNull();
+        assertThat(result.getFirstName()).isEqualTo("John");
+        verify(userRepository, times(1)).findById(1L);
+    }
+
+    @Test
+    void testFindByIdModel_UserFound() {
+        UserModel user = new UserModel();
+        user.setId(1L);
+        user.setFirstName("John");
+
+        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
+
+        UserModel result = userService.findByIdModel(1L);
 
         assertThat(result).isNotNull();
         assertThat(result.getFirstName()).isEqualTo("John");
@@ -174,5 +193,72 @@ class UserServiceTest {
         assertThat(exception.getMessage()).isEqualTo("User not found with id 1");
         verify(userRepository, times(1)).findById(1L);
         verify(userRepository, never()).save(any(UserModel.class));
+    }
+
+    @Test
+    void testMapToDTO() {
+        UserModel userModel = UserModel.builder()
+                .firstName("John")
+                .secondName("Jairo")
+                .isActive(true)
+                .identification("1005959222")
+                .phone("30030030")
+                .passwordHash("#######").build();
+
+        UsersDTO result = userService.mapUserDTO(userModel);
+
+        assertThat(result.getFirstName()).isEqualTo("John");
+        assertThat(result.getSecondName()).isEqualTo("Jairo");
+        assertThat(result.getIdentification()).isEqualTo("1005959222");
+        assertThat(result.getPhone()).isEqualTo("30030030");
+        assertThat(result.getPassword()).isEqualTo("#######");
+        assertThat(result.getIsActive()).isTrue();
+    }
+
+   @Test
+    void testMapToModel() {
+        UsersDTO usersDTO = UsersDTO.builder()
+                .id(1L)
+                .email("jjjjj@kkk.com")
+                .firstName("John")
+                .secondName("Jairo")
+                .identification("1010010101")
+                .isActive(true)
+                .password("######")
+                .phone("202020202")
+                .build();
+
+        UserModel result = userService.mapUserModel(usersDTO);
+
+
+        assertThat(result.getEmail()).isEqualTo("jjjjj@kkk.com");
+        assertThat(result.getIdentification()).isEqualTo("1010010101");
+        assertThat(result.getSecondName()).isEqualTo("Jairo");
+        assertThat(result.getPhone()).isEqualTo("202020202");
+        assertThat(result.getPasswordHash()).isEqualTo("######");
+        assertThat(result.getFirstName()).isEqualTo("John");
+    }
+
+    @Test
+    void testMapToModel_WithNullIsActive() {
+        UsersDTO usersDTO = UsersDTO.builder()
+                .id(1L)
+                .email("jjjjj@kkk.com")
+                .firstName("John")
+                .secondName("Jairo")
+                .identification("1010010101")
+                .isActive(null)
+                .password("######")
+                .phone("202020202")
+                .build();
+
+        UserModel result = userService.mapUserModel(usersDTO);
+
+        assertThat(result.getEmail()).isEqualTo("jjjjj@kkk.com");
+        assertThat(result.getIdentification()).isEqualTo("1010010101");
+        assertThat(result.getSecondName()).isEqualTo("Jairo");
+        assertThat(result.getPhone()).isEqualTo("202020202");
+        assertThat(result.getPasswordHash()).isEqualTo("######");
+        assertThat(result.getFirstName()).isEqualTo("John");
     }
 }

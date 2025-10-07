@@ -88,18 +88,8 @@ public class ReservationService {
         Optional.ofNullable(dto.getEndAt()).ifPresent(existing::setEndAt);
         Optional.ofNullable(dto.getStatusCode()).ifPresent(existing::setStatusCode);
         Optional.ofNullable(dto.getNotes()).ifPresent(existing::setNotes);
-
-        if (dto.getUserDTO() != null && dto.getUserDTO().getId() != null) {
-            UserModel user = userRepository.findById(dto.getUserDTO().getId())
-                    .orElseThrow(() -> new NotFoundException("Usuario no encontrado"));
-            existing.setUser(user);
-        }
-
-        if (dto.getCourtDTO() != null && dto.getCourtDTO().getId() != null) {
-            CourtModel court = courtRepository.findById(dto.getCourtDTO().getId())
-                    .orElseThrow(() -> new NotFoundException("Cancha no encontrada"));
-            existing.setCourt(court);
-        }
+        Optional.ofNullable(userService.mapUserModel(dto.getUserDTO())).ifPresent(existing::setUser);
+        Optional.ofNullable(courtService.mapToModel(dto.getCourtDTO())).ifPresent(existing::setCourt);
 
         reservationRepository.save(existing);
         return new ApiResponse<>(true, "Registro actualizado exitosamente", mapToDTO(existing));
@@ -120,7 +110,7 @@ public class ReservationService {
         var userDTO = userService.mapUserDTO(model.getUser());
 
         return ReservationDTO.builder()
-                .id(model.getId() != null ? model.getId().longValue() : null)
+                .id(model.getId())
                 .userDTO(userDTO)
                 .courtDTO(courtService.mapToDTO(model.getCourt()))
                 .startAt(model.getStartAt())

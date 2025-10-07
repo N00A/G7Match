@@ -24,11 +24,4 @@ public class SportModel {
 
     @OneToMany(mappedBy = "sport", cascade = CascadeType.ALL)
     private List<CourtModel> courts;
-
-    @PrePersist
-    public void prePersist() {
-        if (isActive == null) {
-            isActive = Boolean.TRUE;
-        }
-    }
 }
