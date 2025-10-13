@@ -314,6 +314,7 @@ class ReservationServiceTest {
 
         ReservationDTO reservationDTO = ReservationDTO.builder()
                 .id(1L)
+                .userId(userDTO.getId())
                 .userDTO(userDTO)
                 .courtDTO(courtDTO)
                 .startAt(new Date(System.currentTimeMillis() + 2 * 24 * 60 * 60 * 1000)) // pasado mañana

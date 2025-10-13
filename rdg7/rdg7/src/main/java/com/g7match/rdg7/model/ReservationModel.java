@@ -20,7 +20,6 @@ public class ReservationModel {
     @ManyToOne
     @JoinColumn(name = "Court_id")
     private CourtModel court;
-
     @ManyToOne
     @JoinColumn(name = "User_id")
     private UserModel user;

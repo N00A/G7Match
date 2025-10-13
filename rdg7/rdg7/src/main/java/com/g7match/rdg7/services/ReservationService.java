@@ -51,6 +51,7 @@ public class ReservationService {
     public ApiResponse<List<ReservationDTO>> getAll() {
         List<ReservationDTO> list = reservationRepository.findAll().stream()
                 .map(this::mapToDTO)
+                .filter(java.util.Objects::nonNull)
                 .toList();
         return new ApiResponse<>(true, "Lista de registros consultada exitosamente", list);
     }
@@ -108,10 +109,10 @@ public class ReservationService {
     // === MAP TO DTO ===
     private ReservationDTO mapToDTO(ReservationModel model) {
         var userDTO = userService.mapUserDTO(model.getUser());
-
         return ReservationDTO.builder()
                 .id(model.getId())
                 .userDTO(userDTO)
+                .userId(model.getUser().getId())
                 .courtDTO(courtService.mapToDTO(model.getCourt()))
                 .startAt(model.getStartAt())
                 .endAt(model.getEndAt())

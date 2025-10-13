@@ -76,6 +76,7 @@ public class UserService {
 
     public UsersDTO mapUserDTO (UserModel userModel){
         return UsersDTO.builder()
+                .id(userModel.getId())
                 .email(userModel.getEmail())
                 .phone(userModel.getPhone())
                 .firstName(userModel.getFirstName())
