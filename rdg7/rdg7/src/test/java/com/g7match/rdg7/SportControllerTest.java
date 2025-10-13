@@ -60,10 +60,10 @@ class SportControllerTest {
         SportDTO sportDTO = SportDTO.builder()
                 .name("Cricket")
                 .isActive(true)
-                .id(1l)
+                .id(1L)
                 .build();
 
-        Mockito.when(sportService.getById(1l)).thenReturn(
+        Mockito.when(sportService.getById(1L)).thenReturn(
                 new ApiResponse<>(
                         true,
                         "Registro consultado exitosamente",
@@ -269,7 +269,4 @@ class SportControllerTest {
                 .andExpect(jsonPath("$.message", containsString("Error interno del servidor")))
                 .andExpect(jsonPath("$.data").value(nullValue()));
     }
-
-
-
 }

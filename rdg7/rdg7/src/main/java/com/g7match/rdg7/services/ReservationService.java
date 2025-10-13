@@ -38,7 +38,6 @@ public class ReservationService {
         this.courtService = courtService;
     }
 
-    // === GET BY ID ===
     public ApiResponse<ReservationDTO> getById(Long id) {
         ReservationModel model = reservationRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(
@@ -47,7 +46,6 @@ public class ReservationService {
         return new ApiResponse<>(true, "Registro consultado exitosamente", mapToDTO(model));
     }
 
-    // === GET ALL ===
     public ApiResponse<List<ReservationDTO>> getAll() {
         List<ReservationDTO> list = reservationRepository.findAll().stream()
                 .map(this::mapToDTO)
@@ -56,7 +54,6 @@ public class ReservationService {
         return new ApiResponse<>(true, "Lista de registros consultada exitosamente", list);
     }
 
-    // === CREATE ===
     public ApiResponse<ReservationDTO> create(ReservationDTO dto) {
 
         UserModel user = userRepository.findById(dto.getUserDTO().getId())
@@ -78,7 +75,6 @@ public class ReservationService {
         return new ApiResponse<>(true, "Registro creado exitosamente", mapToDTO(saved));
     }
 
-    // === UPDATE ===
     public ApiResponse<ReservationDTO> update(ReservationDTO dto) {
         ReservationModel existing = reservationRepository.findById(dto.getId())
                 .orElseThrow(() -> new NotFoundException(
@@ -96,7 +92,6 @@ public class ReservationService {
         return new ApiResponse<>(true, "Registro actualizado exitosamente", mapToDTO(existing));
     }
 
-    // === DELETE ===
     public ApiResponse<Void> delete(Long id) {
         ReservationModel model = reservationRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(
@@ -106,7 +101,6 @@ public class ReservationService {
         return new ApiResponse<>(true, "Reserva eliminada exitosamente", null);
     }
 
-    // === MAP TO DTO ===
     private ReservationDTO mapToDTO(ReservationModel model) {
         var userDTO = userService.mapUserDTO(model.getUser());
         return ReservationDTO.builder()

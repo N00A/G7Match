@@ -54,8 +54,8 @@ class ReservationControllerTest {
     void testGetByIdSuccess() throws Exception {
         ReservationDTO reservationDTO = ReservationDTO.builder()
                 .id(1L)
-                .startAt(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000)) // mañana
-                .endAt(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000 + 2 * 60 * 60 * 1000)) // mañana + 2 horas
+                .startAt(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000))
+                .endAt(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000 + 2 * 60 * 60 * 1000))
                 .statusCode("ACTIVE")
                 .build();
 
@@ -93,14 +93,14 @@ class ReservationControllerTest {
 
         reservationDTOS.add(ReservationDTO.builder()
                 .id(1L)
-                .startAt(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000)) // mañana
-                .endAt(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000 + 2 * 60 * 60 * 1000)) // mañana + 2 horas
+                .startAt(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000))
+                .endAt(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000 + 2 * 60 * 60 * 1000))
                 .statusCode("ACTIVE")
                 .build());
         reservationDTOS.add(ReservationDTO.builder()
                 .id(2L)
-                .startAt(new Date(System.currentTimeMillis() + 2 * 24 * 60 * 60 * 1000)) // pasado mañana
-                .endAt(new Date(System.currentTimeMillis() + 2 * 24 * 60 * 60 * 1000 + 2 * 60 * 60 * 1000)) // pasado mañana + 2 horas
+                .startAt(new Date(System.currentTimeMillis() + 2 * 24 * 60 * 60 * 1000))
+                .endAt(new Date(System.currentTimeMillis() + 2 * 24 * 60 * 60 * 1000 + 2 * 60 * 60 * 1000))
                 .statusCode("CANCELLED")
                 .build());
 
@@ -122,16 +122,16 @@ class ReservationControllerTest {
     @Test
     void testCreateSuccess() throws Exception {
         ReservationDTO reservationDTO = ReservationDTO.builder()
-                .startAt(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000)) // mañana
-                .endAt(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000 + 2 * 60 * 60 * 1000)) // mañana + 2 horas
+                .startAt(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000))
+                .endAt(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000 + 2 * 60 * 60 * 1000))
                 .statusCode("ACTIVE")
                 .notes("Reserva de prueba")
                 .build();
 
         ReservationDTO createdReservation = ReservationDTO.builder()
                 .id(1L)
-                .startAt(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000)) // mañana
-                .endAt(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000 + 2 * 60 * 60 * 1000)) // mañana + 2 horas
+                .startAt(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000))
+                .endAt(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000 + 2 * 60 * 60 * 1000))
                 .statusCode("ACTIVE")
                 .notes("Reserva de prueba")
                 .build();
@@ -157,8 +157,8 @@ class ReservationControllerTest {
     @Test
     void testCreateError() throws Exception {
         ReservationDTO reservationDTO = ReservationDTO.builder()
-                .startAt(new Date(System.currentTimeMillis() - 24 * 60 * 60 * 1000)) // ayer
-                .endAt(new Date(System.currentTimeMillis() - 24 * 60 * 60 * 1000 + 2 * 60 * 60 * 1000)) // ayer + 2 horas
+                .startAt(new Date(System.currentTimeMillis() - 24 * 60 * 60 * 1000))
+                .endAt(new Date(System.currentTimeMillis() - 24 * 60 * 60 * 1000 + 2 * 60 * 60 * 1000))
                 .statusCode("ACTIVE")
                 .build();
 
@@ -178,8 +178,8 @@ class ReservationControllerTest {
     void testUpdateSuccess() throws Exception {
         ReservationDTO reservationDTO = ReservationDTO.builder()
                 .id(1L)
-                .startAt(new Date(System.currentTimeMillis() + 2 * 24 * 60 * 60 * 1000)) // pasado mañana
-                .endAt(new Date(System.currentTimeMillis() + 2 * 24 * 60 * 60 * 1000 + 3 * 60 * 60 * 1000)) // pasado mañana + 3 horas
+                .startAt(new Date(System.currentTimeMillis() + 2 * 24 * 60 * 60 * 1000))
+                .endAt(new Date(System.currentTimeMillis() + 2 * 24 * 60 * 60 * 1000 + 3 * 60 * 60 * 1000))
                 .statusCode("UPDATED")
                 .notes("Reserva actualizada")
                 .build();
@@ -206,8 +206,8 @@ class ReservationControllerTest {
     void testUpdateError() throws Exception {
         ReservationDTO reservationDTO = ReservationDTO.builder()
                 .id(99L)
-                .startAt(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000)) // mañana
-                .endAt(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000 + 2 * 60 * 60 * 1000)) // mañana + 2 horas
+                .startAt(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000))
+                .endAt(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000 + 2 * 60 * 60 * 1000))
                 .statusCode("ACTIVE")
                 .build();
 
@@ -263,5 +263,4 @@ class ReservationControllerTest {
                 .andExpect(jsonPath("$.message", containsString("Error interno del servidor")))
                 .andExpect(jsonPath("$.data").value(nullValue()));
     }
-
 }

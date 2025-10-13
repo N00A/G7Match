@@ -16,7 +16,6 @@ public class RoleModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String name;
 
     @OneToMany(mappedBy = "roleModel", cascade = CascadeType.ALL, orphanRemoval = true)

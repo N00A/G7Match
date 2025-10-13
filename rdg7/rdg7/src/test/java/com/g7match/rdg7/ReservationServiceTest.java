@@ -63,8 +63,8 @@ class ReservationServiceTest {
                 .id(1L)
                 .user(userModel)
                 .court(courtModel)
-                .startAt(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000)) // mañana
-                .endAt(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000 + 2 * 60 * 60 * 1000)) // mañana + 2 horas
+                .startAt(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000))
+                .endAt(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000 + 2 * 60 * 60 * 1000))
                 .statusCode("ACTIVE")
                 .notes("Reserva de prueba")
                 .build();
@@ -123,8 +123,8 @@ class ReservationServiceTest {
                 .id(1L)
                 .user(userModel)
                 .court(courtModel)
-                .startAt(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000)) // mañana
-                .endAt(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000 + 2 * 60 * 60 * 1000)) // mañana + 2 horas
+                .startAt(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000))
+                .endAt(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000 + 2 * 60 * 60 * 1000))
                 .statusCode("ACTIVE")
                 .build();
 
@@ -132,8 +132,8 @@ class ReservationServiceTest {
                 .id(2L)
                 .user(userModel)
                 .court(courtModel)
-                .startAt(new Date(System.currentTimeMillis() + 2 * 24 * 60 * 60 * 1000)) // pasado mañana
-                .endAt(new Date(System.currentTimeMillis() + 2 * 24 * 60 * 60 * 1000 + 2 * 60 * 60 * 1000)) // pasado mañana + 2 horas
+                .startAt(new Date(System.currentTimeMillis() + 2 * 24 * 60 * 60 * 1000))
+                .endAt(new Date(System.currentTimeMillis() + 2 * 24 * 60 * 60 * 1000 + 2 * 60 * 60 * 1000))
                 .statusCode("CANCELLED")
                 .build();
 
@@ -180,8 +180,8 @@ class ReservationServiceTest {
         ReservationDTO reservationDTO = ReservationDTO.builder()
                 .userDTO(userDTO)
                 .courtDTO(courtDTO)
-                .startAt(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000)) // mañana
-                .endAt(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000 + 2 * 60 * 60 * 1000)) // mañana + 2 horas
+                .startAt(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000))
+                .endAt(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000 + 2 * 60 * 60 * 1000))
                 .statusCode("ACTIVE")
                 .notes("Reserva de prueba")
                 .build();
@@ -204,17 +204,16 @@ class ReservationServiceTest {
                 .id(1L)
                 .user(userModel)
                 .court(courtModel)
-                .startAt(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000)) // mañana
-                .endAt(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000 + 2 * 60 * 60 * 1000)) // mañana + 2 horas
+                .startAt(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000))
+                .endAt(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000 + 2 * 60 * 60 * 1000))
                 .statusCode("ACTIVE")
                 .notes("Reserva de prueba")
                 .build();
 
         when(reservationRepository.save(any(ReservationModel.class))).thenReturn(savedReservation);
-        // Mock para los mapeos de DTOs
+
         when(userService.mapUserDTO(any(UserModel.class))).thenReturn(userDTO);
         when(courtService.mapToDTO(any(CourtModel.class))).thenReturn(courtDTO);
-        // Nota: no se requiere mock de SportService ya que CourtService está mockeado
 
         ApiResponse<ReservationDTO> response = reservationService.create(reservationDTO);
 
@@ -248,8 +247,8 @@ class ReservationServiceTest {
         ReservationDTO reservationDTO = ReservationDTO.builder()
                 .userDTO(userDTO)
                 .courtDTO(courtDTO)
-                .startAt(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000)) // mañana
-                .endAt(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000 + 2 * 60 * 60 * 1000)) // mañana + 2 horas
+                .startAt(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000))
+                .endAt(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000 + 2 * 60 * 60 * 1000))
                 .statusCode("ACTIVE")
                 .build();
 
@@ -278,8 +277,8 @@ class ReservationServiceTest {
         ReservationDTO reservationDTO = ReservationDTO.builder()
                 .userDTO(userDTO)
                 .courtDTO(courtDTO)
-                .startAt(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000)) // mañana
-                .endAt(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000 + 2 * 60 * 60 * 1000)) // mañana + 2 horas
+                .startAt(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000))
+                .endAt(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000 + 2 * 60 * 60 * 1000))
                 .statusCode("ACTIVE")
                 .build();
 
@@ -317,8 +316,8 @@ class ReservationServiceTest {
                 .userId(userDTO.getId())
                 .userDTO(userDTO)
                 .courtDTO(courtDTO)
-                .startAt(new Date(System.currentTimeMillis() + 2 * 24 * 60 * 60 * 1000)) // pasado mañana
-                .endAt(new Date(System.currentTimeMillis() + 2 * 24 * 60 * 60 * 1000 + 3 * 60 * 60 * 1000)) // pasado mañana + 3 horas
+                .startAt(new Date(System.currentTimeMillis() + 2 * 24 * 60 * 60 * 1000))
+                .endAt(new Date(System.currentTimeMillis() + 2 * 24 * 60 * 60 * 1000 + 3 * 60 * 60 * 1000))
                 .statusCode("UPDATED")
                 .notes("Reserva actualizada")
                 .build();
@@ -337,8 +336,8 @@ class ReservationServiceTest {
                 .id(1L)
                 .user(userModel)
                 .court(courtModel)
-                .startAt(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000)) // mañana
-                .endAt(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000 + 2 * 60 * 60 * 1000)) // mañana + 2 horas
+                .startAt(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000))
+                .endAt(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000 + 2 * 60 * 60 * 1000))
                 .statusCode("ACTIVE")
                 .notes("Reserva original")
                 .build();
@@ -389,8 +388,8 @@ class ReservationServiceTest {
                 .id(1L)
                 .user(userModel)
                 .court(courtModel)
-                .startAt(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000)) // mañana
-                .endAt(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000 + 2 * 60 * 60 * 1000)) // mañana + 2 horas
+                .startAt(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000))
+                .endAt(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000 + 2 * 60 * 60 * 1000))
                 .statusCode("ACTIVE")
                 .build();
 

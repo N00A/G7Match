@@ -46,7 +46,7 @@ public class SportService {
     }
 
     public ApiResponse<SportDTO> create(SportDTO sportDTO){
-        // Aseguramos isActive = TRUE al crear
+
         SportModel toSave = SportModel.builder()
                 .name(sportDTO.getName())
                 .isActive(Boolean.TRUE)
@@ -105,7 +105,6 @@ public class SportService {
         return SportModel.builder()
                 .id(sportDTO.getId())
                 .name(sportDTO.getName())
-                // default TRUE si viene nulo
                 .isActive(sportDTO.getIsActive() != null ? sportDTO.getIsActive() : Boolean.TRUE)
                 .build();
     }

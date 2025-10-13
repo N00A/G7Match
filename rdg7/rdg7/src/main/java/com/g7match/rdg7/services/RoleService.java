@@ -2,10 +2,8 @@ package com.g7match.rdg7.services;
 
 import com.g7match.rdg7.dto.ApiResponse;
 import com.g7match.rdg7.dto.RoleDTO;
-import com.g7match.rdg7.dto.SportDTO;
 import com.g7match.rdg7.exception.NotFoundException;
 import com.g7match.rdg7.model.RoleModel;
-import com.g7match.rdg7.model.SportModel;
 import com.g7match.rdg7.repository.RoleRepository;
 import org.springframework.stereotype.Service;
 

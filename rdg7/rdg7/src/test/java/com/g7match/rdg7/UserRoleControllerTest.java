@@ -195,5 +195,4 @@ class UserRoleControllerTest {
                 .andExpect(jsonPath("$.message", containsString("Error interno del servidor")))
                 .andExpect(jsonPath("$.data").value(nullValue()));
     }
-
 }
