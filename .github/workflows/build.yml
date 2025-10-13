@@ -68,7 +68,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: https://sonarcloud.io
         with:
-          scanMetadataReportFile: build/sonar/report-task.txt
+          scanMetadataReportFile: rdg7/rdg7/build/sonar/report-task.txt
 
       - name: Upload JAR → EC2 (as ~/rdg7-0.0.1-SNAPSHOT.jar)
         if: github.ref == 'refs/heads/develop' && github.event_name == 'push'
