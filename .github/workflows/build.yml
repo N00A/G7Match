@@ -70,7 +70,7 @@ jobs:
         with:
           scanMetadataReportFile: rdg7/rdg7/build/sonar/report-task.txt
 
-      - name: Upload JAR → EC2 (as ~/rdg7-0.0.1-SNAPSHOT.jar)
+      - name: Upload JAR → EC2 (flatten to HOME)
         if: github.ref == 'refs/heads/develop' && github.event_name == 'push'
         uses: appleboy/scp-action@v1
         with:
@@ -79,9 +79,10 @@ jobs:
           key: ${{ secrets.AWS_SSH_KEY }}
           source: "rdg7/rdg7/build/libs/rdg7-0.0.1-SNAPSHOT.jar"
           target: "~/"
+          strip_components: 4
           overwrite: true
 
-      - name: Rename to app.jar in HOME (robusto)
+      - name: Rename to app.jar in HOME
         if: github.ref == 'refs/heads/develop' && github.event_name == 'push'
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -90,12 +91,8 @@ jobs:
           key: ${{ secrets.AWS_SSH_KEY }}
           script: |
             cd ~
-            if [ -f rdg7-0.0.1-SNAPSHOT.jar ]; then
-              mv -f rdg7-0.0.1-SNAPSHOT.jar app.jar
-              ls -l app.jar
-            else
-              echo "No se encontró rdg7-0.0.1-SNAPSHOT.jar en HOME"; exit 1
-            fi
+            mv -f rdg7-0.0.1-SNAPSHOT.jar app.jar
+            ls -l app.jar
 
   deploy:
     name: CD (main) – ejecutar ~/deploy.sh en EC2
