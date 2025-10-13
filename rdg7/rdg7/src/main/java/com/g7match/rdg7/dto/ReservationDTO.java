@@ -8,10 +8,8 @@ import java.util.Date;
 @Builder
 public class ReservationDTO {
     private Long id;
-
     private Long courtId;
     private Long userId;
-
     private CourtDTO courtDTO;
     private UsersDTO userDTO;
     private Date startAt;

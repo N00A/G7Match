@@ -87,6 +87,5 @@ public class UserService {
                 .password(userModel.getPasswordHash())
                 .secondLastName(userModel.getSecondLastName())
                 .build();
-
     }
 }

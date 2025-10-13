@@ -1,3 +1,6 @@
+# NOTA: Dockerfile solo para uso local/desarrollo.
+# Producción usa el Dockerfile y deploy.sh en la EC2. Este archivo NO lo usa el CI/CD.
+
 # Etapa 1: Construcción de la aplicación con Gradle
 # Usa imagen base con Gradle y JDK 17 para compilar la app
 FROM gradle:8.7-jdk17 AS build
